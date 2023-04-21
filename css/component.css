@@ -1,0 +1,15 @@
+h1{
+    font-size:xx-large;
+    color: brown;
+    display: flex;
+    justify-content: center; 
+}
+body{
+    background-color: #282828;
+}
+footer{
+    font-size: small;
+    color: gray;
+    display: flex;
+    justify-content: center;
+}

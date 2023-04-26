@@ -16,6 +16,7 @@ body{
 .titulo{
     font-size:100px;
     color: brown;
+    text-shadow: 10px 10px 20px brown;
     display: flex;
     justify-content: center;
     margin-top: 50px;
@@ -26,12 +27,73 @@ body{
     grid-row-end: 2;
 }
 .Menu{
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 300px 100px auto;
+    gap: 0px;
+    background-color: rgb(80, 75, 75);
+    border: 20px;
+    border-style: solid;
+    border-color: rgb(82, 43, 43);
+    margin-top: 0px;
+    padding-top: 0px;
+    height: 75%;
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
+}
+.Menu p{
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.Menu .botao_start{ 
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.Menu .botao_start button{ 
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-size: 45px;
+    margin: 0px;
+    padding: 0px;
+    /*background-color: rgb(10, 10, 104);
+    color: white*/
+}
+
+.Menu .botao_score{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+.Menu .botao_score button{ 
+    text-decoration: none;
+    height: 45%;
+    width: 100%;
+    border: none;
+    font-size: 45px;
+    margin: 0px;
+    padding: 0px;
+    /*background-color: rgb(10, 10, 104);
+    color: white*/
 }
 footer{
     font-size: small;

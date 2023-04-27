@@ -1,31 +1,3 @@
-body{
-    background-color: #282828;
-    color: white;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-}
-
-#root{
-    display: grid;
-    justify-content: center;
-    grid-template-columns: 1fr 5fr 1fr;
-    grid-template-rows: auto 50em auto;
-    
-}
-.titulo{
-    font-size:100px;
-    color: brown;
-    text-shadow: 10px 10px 20px brown;
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
 .Menu{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -35,6 +7,7 @@ body{
     border: 20px;
     border-style: solid;
     border-color: rgb(82, 43, 43);
+    border-radius: 50px;
     margin-top: 0px;
     padding-top: 0px;
     height: 75%;
@@ -43,6 +16,7 @@ body{
     grid-row-start: 2;
     grid-row-end: 3;
 }
+
 .Menu p{
     font-size: 30px;
     display: flex;
@@ -70,8 +44,9 @@ body{
     font-size: 45px;
     margin: 0px;
     padding: 0px;
-    /*background-color: rgb(10, 10, 104);
-    color: white*/
+    border-radius: 25px;
+    background-color: rgb(82, 43, 43);
+    color: white
 }
 
 .Menu .botao_score{
@@ -92,17 +67,7 @@ body{
     font-size: 45px;
     margin: 0px;
     padding: 0px;
-    /*background-color: rgb(10, 10, 104);
-    color: white*/
-}
-footer{
-    font-size: small;
-    color: gray;
-    display: flex;
-    justify-content: center;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 3;
-    grid-row-end: 4;
-    
+    border-radius: 25px;
+    background-color: rgb(82, 43, 43);
+    color: white
 }

@@ -1,0 +1,11 @@
+footer{
+    font-size: small;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    
+}

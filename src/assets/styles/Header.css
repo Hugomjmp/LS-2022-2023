@@ -1,0 +1,17 @@
+.Header{
+    font-size:25px;
+    color: brown;
+    text-shadow: 10px 10px 20px brown;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    height: 100px;
+}
+.titulo{
+    margin:0px;
+}

@@ -1,7 +1,4 @@
-#container{
-  display: grid;
-  justify-content: center;
-  grid-template-columns: 1fr 5fr 1fr;
-  grid-template-rows: auto 50em auto;
-  
-}
+.container-fluid {
+  background-color: #282828;
+  height: 100%;
+}/*# sourceMappingURL=App.css.map */

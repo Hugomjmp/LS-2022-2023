@@ -1,0 +1,15 @@
+$tamanho : 50px;
+$cor: brown;
+$sombra: 10px 10px 20px brown;
+$altura: 100px;
+$margem-cima: 50px;
+$margem-baixo: 50px;
+
+h1{
+    font-size: $tamanho;
+    color: $cor;
+    text-shadow: $sombra;
+    height: $altura;
+    margin-top: $margem-cima;
+    margin-bottom: $margem-baixo;
+}

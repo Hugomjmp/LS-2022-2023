@@ -1,0 +1,7 @@
+$cor-de-fundo: #282828;
+$tamanho-pagina: 100%;
+
+.container-fluid{
+    background-color: $cor-de-fundo;
+    height: $tamanho-pagina;
+}

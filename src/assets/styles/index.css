@@ -1,12 +1,11 @@
-body {
-  background-color: #282828;
-  color: white;
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif; 
-
+#root {
+  height: 100%;
 }
 
+body {
+  height: 100%;
+}
 
-
+html {
+  height: 100%;
+}/*# sourceMappingURL=index.css.map */

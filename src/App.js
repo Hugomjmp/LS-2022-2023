@@ -12,7 +12,7 @@ function App() {
       </div>
       <div className="row ">
         <div className="col-1"></div>
-        <div className="col ">
+        <div className="Menu-Game col ">
           <Menu></Menu>
           <Game></Game>
         </div>

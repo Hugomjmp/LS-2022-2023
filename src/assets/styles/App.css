@@ -1,4 +1,12 @@
 .container-fluid {
   background-color: #282828;
   height: 100%;
+}
+
+.Menu-Game {
+  background-color: rgb(80, 75, 75);
+  border: 20px;
+  border-style: solid;
+  border-color: rgb(82, 43, 43);
+  border-radius: 50px;
 }/*# sourceMappingURL=App.css.map */

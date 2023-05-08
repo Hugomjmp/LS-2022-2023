@@ -36,15 +36,22 @@ function Menu() {
           </div>
         </div>
       </div>
+      <div className="row h2">
+        <div>
+          <button type="button" className="btn btn-primary">
+            START GAME
+          </button>
+        </div>
+      </div>
       <div className="Players row">
         <div className="col">
-        <p className="Player_1_name">Player 1</p>
-        <p className="Player_2_name">Player 2</p>
+          <p className="Player_1_name">Player 1</p>
+          <p className="Player_2_name">Player 2</p>
         </div>
         <div className="col">
-        <input className="form-control h2 text-center" type="text"></input>
-        
-        <input className="form-control h2 text-center" type="text"></input>
+          <input className="form-control h2 text-center" type="text"></input>
+
+          <input className="form-control h2 text-center" type="text"></input>
         </div>
       </div>
     </div>

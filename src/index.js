@@ -5,6 +5,7 @@ import "./assets/styles/index.css";
 import "./assets/styles/Header.css";
 import "./assets/styles/Footer.css";
 import "./assets/styles/Menu.css";
+import "./assets/styles/Game.css";
 
 //a Pasta src vai estar escondida da internet
 

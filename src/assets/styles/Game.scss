@@ -1,6 +1,9 @@
 $cor:white;
+$pecas: bolder;
+$tamnho-pecas: 25px;
 
 .test{
     color: $cor;
-    
+    font-weight: $pecas;    
+    font-size: $tamnho-pecas;
 }

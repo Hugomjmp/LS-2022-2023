@@ -7,7 +7,10 @@ $tamanho: 100px;
     font-size: $tamanho-letra;
     height: $tamanho;
 }
-
+.botao-start{
+    height: $tamanho;
+    font-size: $tamanho-letra;
+}
 .Player_1_name{
     color: $cor;
 }

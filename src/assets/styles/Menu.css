@@ -4,6 +4,11 @@
   height: 100px;
 }
 
+.botao-start {
+  height: 100px;
+  font-size: 30px;
+}
+
 .Player_1_name {
   color: white;
 }

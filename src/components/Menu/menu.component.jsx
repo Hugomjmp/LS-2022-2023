@@ -37,8 +37,8 @@ function Menu() {
         </div>
       </div>
       <div className="row h2">
-        <div>
-          <button type="button" className="btn btn-primary">
+        <div className="botao-start">
+          <button type="button" className="botao-startgame btn btn-primary">
             START GAME
           </button>
         </div>

@@ -1,8 +1,18 @@
 import React from "react";
 
-function Game() {
+function Game(props) {
+
+  const {gameStarted} = props;
   return (
-    <div>
+    <div className="Game" 
+    hidden = {gameStarted==false}
+    >
+      <div className="GameInfo">
+        <label id ="Time">Time:</label>
+        <label id= "P1_points:">P1 Points</label>
+        <label id= "P2_points:">P1 Points</label>
+        <button id = "QuitGame">Quit</button>
+      </div>
       <div className="linha_1_a_3 row border-bottom border-dark border-5">
         <div className="Tabuleiro_1 col border-end border-dark border-5">
           <div className="linha_1_a_3 row border-bottom border-white border-5">

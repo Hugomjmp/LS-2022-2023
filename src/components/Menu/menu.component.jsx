@@ -1,12 +1,19 @@
 import React from "react";
 
-function Menu() {
+function Menu(props) {
+  const {handleGameStart} = props;
+
+
+  /*function changePanel(){
+    setGameStarted = true;
+  }*/
+
   return (
     <div className="Menu">
       <p className="titulo-menu">Main Menu</p>
       <div className="row">
         <div className="botao_start h2">
-          <button type="button" className="btn btn-secondary">
+          <button type="button" className="btn btn-secondary" onClick={handleGameStart}>
             Start Game
           </button>
         </div>

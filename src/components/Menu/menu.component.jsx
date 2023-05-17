@@ -13,7 +13,7 @@ function Menu(props) {
       <p className="titulo-menu">Main Menu</p>
       <div className="row">
         <div className="botao_start h2">
-          <button type="button" className="btn btn-secondary" onClick={handleGameStart}>
+          <button type="button" className="btn btn-secondary" >
             Start Game
           </button>
         </div>
@@ -45,7 +45,7 @@ function Menu(props) {
       </div>
       <div className="row h2">
         <div className="botao-start">
-          <button type="button" className="botao-startgame btn btn-primary">
+          <button type="button" className="botao-startgame btn btn-primary" onClick={handleGameStart}>
             START GAME
           </button>
         </div>

@@ -2,4 +2,13 @@
   color: white;
   font-weight: bolder;
   font-size: 25px;
-}/*# sourceMappingURL=Game.css.map */
+}
+
+.x_image {
+  background-image: url("https://dictionary.cambridge.org/pt/images/thumb/cross_noun_002_09265.jpg?version=5.0.318");
+  background-size: cover;
+}
+
+/*.o_image{
+    background-image: ;
+}*//*# sourceMappingURL=Game.css.map */

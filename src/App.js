@@ -12,14 +12,17 @@ function App() {
       "0"
     ); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
 
-  function handleGameStart() {
-    if (gameStarted == false) {
-      setGameStarted(true);
-      console.log("aqui" + gameStarted);
-    } else {
-      setGameStarted(false);
-    }
+const [gameStarted,setGameStarted] = useState(false); /*usado */
+const [gameType,setGameType] = useState("0");   /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
+const [playerSelection,setPlayer] = useState("1"); /*1 para jogador 1 e 2 para jogador dois*/
+function handleGameStart(){
+  if (gameStarted==false){
+    setGameStarted(true);
+    console.log("aqui" + gameStarted);
+  }else{
+    setGameStarted(false);
   }
+}
 
   return (
     <div className="container-fluid text-center">

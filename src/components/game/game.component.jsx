@@ -26,7 +26,7 @@ function Game(props) {
 
 
   return (
-    <div className="Game" hidden={gameStarted==false}>
+    <div className="Game" hidden={gameStarted === false}>
       <div className="GameInfo">
         <div className="linha_mini_menu">
           <button className="QuitGame btn btn-light">Quit</button>

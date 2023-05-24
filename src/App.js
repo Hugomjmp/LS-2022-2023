@@ -13,8 +13,6 @@ function App() {
   const [gameStarted, setGameStarted] = useState(false); /*usado */
   const [gameType, setGameType] = useState(""); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
 
-  //const [gameStarted, setGameStarted] = useState(false); /*usado */
-  //const [gameType,setGameType] = useState("0");   /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
 
 
   function handleMenuJogador() {

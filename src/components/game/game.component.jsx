@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Calcula_Vencedor } from "../../helpers";
 
 function Game(props) {
+  const { gameStarted } = props;
   const [tabuleiro, setTabuleiro] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
 
@@ -15,8 +16,15 @@ function Game(props) {
     setTabuleiro(novoTabuleiro);
     setXIsNext(!xIsNext);
   };
+  const renderSquare = (index) => {
+    return (
+      <button className="square" onClick={() => handleClick(index)}>
+        {tabuleiro[index]}
+      </button>
+    );
+  };
 
-  const { gameStarted } = props;
+
   return (
     <div className="Game" hidden={gameStarted==false}>
       <div className="GameInfo">
@@ -34,37 +42,37 @@ function Game(props) {
         <div className="Tabuleiro_1 col border-end border-dark border-5"> 
           <div className="linha_1_a_3 row border-bottom border-white border-5">
             <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(0)}</button>
             </div>
             <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(1)}</button>
             </div>
             <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(2)}</button>
             </div>
           </div>
 
           <div className="linha_4_a_6 row border-bottom border-white border-5">
             <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(3)}</button>
             </div>
             <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(4)}</button>
             </div>
             <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(5)}</button>
             </div>
           </div>
 
           <div className="linha_7_a_9 row">
             <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(6)}</button>
             </div>
             <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(7)}</button>
             </div>
             <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
+              <button className="celula">{renderSquare(8)}</button>
             </div>
           </div>
         </div>

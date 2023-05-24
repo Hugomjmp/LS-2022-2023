@@ -1,1 +1,1 @@
-export { default as matriz } from "./tic-tac-toe";
+export { default as Calcula_Vencedor } from "./Calcula_Vencedor";

@@ -1,18 +1,20 @@
-$cor:white;
+$cor: rgba(0, 0, 0, 0);
 $pecas: bolder;
-$tamnho-pecas: 25px;
+$tamnho-pecas: 50px;
+$border-botao: none;
 
-.test{
-    color: $cor;
-    font-weight: $pecas;    
-    font-size: $tamnho-pecas;
+.celula{
+    background-color: $cor;    
+    border: $border-botao;
+    height: $tamnho-pecas;
+    width: $tamnho-pecas;
 }
-
+/*
 .x_image{
     background-image: url('https://dictionary.cambridge.org/pt/images/thumb/cross_noun_002_09265.jpg?version=5.0.318');
     background-size: cover;
 }
-
+*/
 /*.o_image{
     background-image: ;
 }*/

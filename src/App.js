@@ -2,27 +2,54 @@ import "./assets/styles/App.css"; //vai buscar o css para a componente App
 import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer.component";
 import Menu from "./components/Menu/menu.component";
+import MenuPlayers from "./components/MenuPlayers/menu-players.component";
 import Game from "./components/game/game.component";
+
 import { useState } from "react";
 
 function App() {
-  const [gameStarted, setGameStarted] = useState(false); /*usado */
-  const [gameType, setGameType] =
-    useState(
-      "0"
-    ); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
 
-const [gameStarted,setGameStarted] = useState(false); /*usado */
-const [gameType,setGameType] = useState("0");   /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
-const [playerSelection,setPlayer] = useState("1"); /*1 para jogador 1 e 2 para jogador dois*/
-function handleGameStart(){
-  if (gameStarted==false){
-    setGameStarted(true);
-    console.log("aqui" + gameStarted);
-  }else{
-    setGameStarted(false);
+  const [menuJogador, setMenuJogador] = useState(false); // para ativar o menu de jogador
+  const [gameStarted, setGameStarted] = useState(false); /*usado */
+  const [gameType, setGameType] = useState(""); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
+
+  //const [gameStarted, setGameStarted] = useState(false); /*usado */
+  //const [gameType,setGameType] = useState("0");   /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
+
+
+  function handleMenuJogador() {
+    if (menuJogador === false) {
+      setMenuJogador(true);
+      
+      console.log("aqui " + menuJogador);
+    } else {
+      
+      setMenuJogador(false);
+      console.log("aqui 2 " + menuJogador);
+    }
   }
-}
+
+  /**
+   * Quando o jogo começa
+   */
+   function handleGameStart() {
+    if (gameStarted === false) {
+      setGameStarted(true);
+      console.log("aqui start " + gameStarted);
+    } else {
+      setGameStarted(false);
+      console.log("aqui start 2 " + gameStarted);
+    }
+  }
+   function handleGameType() {
+    if (gameType === false) {
+      setGameType(true);
+      console.log("PVP " + gameType);
+    } else {
+      setGameType(false);
+      console.log("PVE " + gameType);
+    }
+  }
 
   return (
     <div className="container-fluid text-center">
@@ -32,14 +59,19 @@ function handleGameStart(){
       <div className="row ">
         <div className="col-1"></div>
         <div className="Menu-Game col ">
-          <Menu
-            gameStarted={gameStarted}
-            gameType={gameType}
-            handleGameStart={handleGameStart}
+          <Menu 
+          menuJogador={handleMenuJogador}
           ></Menu>
-          <Game gameStarted={gameStarted} 
-                gameType={gameType}>
-          </Game>
+          <MenuPlayers 
+          menuJogador={menuJogador}
+          gameStarted={handleGameStart}
+          gameType={handleGameType}
+          ></MenuPlayers>
+          <Game 
+          menuJogador={handleMenuJogador} 
+          gameStarted={gameStarted}
+          
+          ></Game>
         </div>
         <div className="col-1"></div>
       </div>

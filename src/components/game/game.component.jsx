@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Calcula_Vencedor } from "../../helpers";
 
 function Game(props) {
-  const { gameStarted } = props;
+  const { gameStarted, playernames } = props;
   const [tabuleiro, setTabuleiro] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
+  const [jogador1, jogador2] = playernames();
+
 
   const handleClick = (index) => {
     if (Calcula_Vencedor(tabuleiro) || tabuleiro[index]) {
@@ -24,22 +26,28 @@ function Game(props) {
     );
   };
 
-
   return (
     <div className="Game" hidden={gameStarted === false}>
       <div className="GameInfo">
         <div className="linha_mini_menu">
-          <button className="QuitGame btn btn-light">Quit</button>
+          <button className="QuitGame btn btn-light">Quit </button>
           <button className="Surrender btn btn-light">
             Surrender metemos?
           </button>
         </div>
-        <label className="Time text-white">Time: </label>
-        <label className="P1_points: text-white"> P1 Points </label>
-        <label className="P2_points: text-white"> P2 Points </label>
+        <div className="stuff row">
+          <label className="Time text-white">Time: </label>
+          <label className="P1_points text-white col">
+            {jogador1} Points
+          </label>
+          <label className="P2_points text-white col">
+            {jogador2} Points
+          </label>
+        </div>
       </div>
+
       <div className="linha_1_a_3 row border-bottom border-dark border-5">
-        <div className="Tabuleiro_1 col border-end border-dark border-5"> 
+        <div className="Tabuleiro_1 col border-end border-dark border-5">
           <div className="linha_1_a_3 row border-bottom border-white border-5">
             <div className="Tabuleiro_1 col border-end border-white border-5">
               <button className="celula">{renderSquare(0)}</button>
@@ -381,7 +389,6 @@ function Game(props) {
       </div>
     </div>
   );
-
 }
 
 export default Game;

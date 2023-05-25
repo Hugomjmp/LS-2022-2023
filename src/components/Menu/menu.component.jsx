@@ -1,11 +1,10 @@
-import React from "react";
-
+import React, { useState } from "react";
 
 function Menu(props) {
   const { menuJogador } = props;
 
   return (
-    <div className="Menu" hidden={menuJogador === true}>
+    <div className="Menu" >
       <p className="titulo-menu">Main Menu</p>
       <div className="row">
         <div className="botao_start h2">

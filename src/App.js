@@ -12,8 +12,13 @@ function App() {
   const [menuJogador, setMenuJogador] = useState(false); // para ativar o menu de jogador
   const [gameStarted, setGameStarted] = useState(false); /*usado */
   const [gameType, setGameType] = useState(""); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
+  const [player1nome, setPlayer1Nome] = useState("");
+  const [player2nome, setPlayer2Nome] = useState("");
 
-
+  const handleplayernames = (player1nome, player2nome) => {
+    setPlayer1Nome(player1nome);
+    setPlayer2Nome(player2nome);
+  }
 
   function handleMenuJogador() {
     if (menuJogador === false) {
@@ -57,18 +62,22 @@ function App() {
       <div className="row ">
         <div className="col-1"></div>
         <div className="Menu-Game col ">
+          {menuJogador ? null :(
           <Menu 
           menuJogador={handleMenuJogador}
           ></Menu>
+        )}
+        {gameStarted ? null : (
           <MenuPlayers 
           menuJogador={menuJogador}
           gameStarted={handleGameStart}
           gameType={handleGameType}
+          playernames={handleplayernames}
           ></MenuPlayers>
+          )}
           <Game 
-          menuJogador={handleMenuJogador} 
           gameStarted={gameStarted}
-          
+          playernames={() => [player1nome , player2nome]}
           ></Game>
         </div>
         <div className="col-1"></div>

@@ -20,7 +20,7 @@ function Game(props) {
   };
   const renderSquare = (index) => {
     return (
-      <button className="square" onClick={() => handleClick(index)}>
+      <button className="square font-weight-bold btn btn-block btn-transparent " onClick={() => handleClick(index)}>
         {tabuleiro[index]}
       </button>
     );
@@ -29,12 +29,6 @@ function Game(props) {
   return (
     <div className="Game" hidden={gameStarted === false}>
       <div className="GameInfo">
-        <div className="linha_mini_menu">
-          <button className="QuitGame btn btn-light">Quit </button>
-          <button className="Surrender btn btn-light">
-            Surrender metemos?
-          </button>
-        </div>
         <div className="stuff row">
           <label className="Time text-white">Time: </label>
           <label className="P1_points text-white col">
@@ -50,37 +44,37 @@ function Game(props) {
         <div className="Tabuleiro_1 col border-end border-dark border-5">
           <div className="linha_1_a_3 row border-bottom border-white border-5">
             <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula">{renderSquare(0)}</button>
+              {renderSquare(0)}
             </div>
             <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula">{renderSquare(1)}</button>
+              {renderSquare(1)}
             </div>
             <div className="Tabuleiro_3 col">
-              <button className="celula">{renderSquare(2)}</button>
+              {renderSquare(2)}
             </div>
           </div>
 
           <div className="linha_4_a_6 row border-bottom border-white border-5">
             <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula">{renderSquare(3)}</button>
+              {renderSquare(3)}
             </div>
             <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula">{renderSquare(4)}</button>
+              {renderSquare(4)}
             </div>
             <div className="Tabuleiro_3 col">
-              <button className="celula">{renderSquare(5)}</button>
+              {renderSquare(5)}
             </div>
           </div>
 
           <div className="linha_7_a_9 row">
             <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula">{renderSquare(6)}</button>
+              {renderSquare(6)}
             </div>
             <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula">{renderSquare(7)}</button>
+              {renderSquare(7)}
             </div>
             <div className="Tabuleiro_3 col">
-              <button className="celula">{renderSquare(8)}</button>
+              {renderSquare(8)}
             </div>
           </div>
         </div>
@@ -387,6 +381,9 @@ function Game(props) {
           </div>
         </div>
       </div>
+      <div className="linha_mini_menu">
+          <button className="QuitGame btn btn-light">Quit </button>
+        </div>
     </div>
   );
 }

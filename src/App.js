@@ -14,6 +14,8 @@ function App() {
   const [gameType, setGameType] = useState(""); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
   const [player1nome, setPlayer1Nome] = useState("");
   const [player2nome, setPlayer2Nome] = useState("");
+  
+
 
   const handleplayernames = (player1nome, player2nome) => {
     setPlayer1Nome(player1nome);

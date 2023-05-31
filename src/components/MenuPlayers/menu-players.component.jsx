@@ -15,7 +15,7 @@ function MenuPlayers(props) {
     event.preventDefault();
 
     playernames(player1,player2);
-    // Aqui você pode fazer algo com os nomes digitados, como salvá-los em um array ou enviá-los para um servidor.
+    
     console.log("Nome 1:", player1);
     console.log("Nome 2:", player2);
     gameStarted();
@@ -27,7 +27,7 @@ function MenuPlayers(props) {
   return (
     <div className="MenuPlayers" hidden={menuJogador === false}>
       <div className="row h2">
-        <div className="col">
+        <div className="row">
           <div className="Seleciona-num-jogadores">
             <div className="botao_start">
               <button
@@ -35,19 +35,19 @@ function MenuPlayers(props) {
                 className="btn btn-secondary"
                 onClick={gameType}
               >
-                Plaver vs Computer
+                Single Player
               </button>
             </div>
           </div>
         </div>
-        <div className="col">
+        <div className="row">
           <div className="botao_score">
             <button
               type="button "
               className="btn btn-secondary"
               onClick={gameType}
             >
-              Player vs Player
+              Multiplayer
             </button>
           </div>
         </div>

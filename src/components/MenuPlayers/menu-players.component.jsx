@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
 function MenuPlayers(props) {
-  const { menuJogador, gameType, gameStarted, playernames } = props;
-  const [player1, setPlayer1] = useState("");
+  const { menuJogador, gameType, resetgame } = props;
+
+  
+  /*const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
 
   const handleplayer1name = (event) => {
@@ -14,7 +16,7 @@ function MenuPlayers(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    playernames(player1,player2);
+    playernames(player1, player2);
     
     console.log("Nome 1:", player1);
     console.log("Nome 2:", player2);
@@ -22,17 +24,19 @@ function MenuPlayers(props) {
     // Limpar os campos de entrada
     //setPlayer1('');
     //setPlayer2('');
-  };
+  };*/
 
   return (
     <div className="MenuPlayers" hidden={menuJogador === false}>
-      <div className="row h2">
+      
+      <p className="titulo-menu">Main Menu</p>
         <div className="row">
           <div className="Seleciona-num-jogadores">
-            <div className="botao_start">
+            <div className="botao_PVE h2">
               <button
                 type="button"
                 className="btn btn-secondary"
+                value={"PVE"}
                 onClick={gameType}
               >
                 Single Player
@@ -41,50 +45,29 @@ function MenuPlayers(props) {
           </div>
         </div>
         <div className="row">
-          <div className="botao_score">
+          <div className="botao_PVP h2">
             <button
-              type="button "
+              type="button"
               className="btn btn-secondary"
+              value={"PVP"}
               onClick={gameType}
             >
               Multiplayer
             </button>
           </div>
         </div>
-      </div>
-      <div className="Players row">
-        <div className="col">
-          <p className="Player_1_text">Player 1</p>
-          <p className="Player_2_text">Player 2</p>
+        <div className="row">
+          <div className="botao_back h2">
+            <button
+              type="button "
+              className="btn btn-secondary"
+              onClick={resetgame}
+            > Back
+            </button>
+          </div>
         </div>
-        <div className="col">
-          <input
-            className="Player 1 form-control h2 text-center"
-            type="text"
-            value={player1}
-            onChange={handleplayer1name}
-          ></input>
-          <input
-            className="Player 2 form-control h2 text-center"
-            type="text"
-            value={player2}
-            onChange={handleplayer2name}
-          ></input>
-        </div>
-      </div>
-      <div className="row h2">
-        <div className="botao-start">
-          <button
-            type="submit"
-            className="botao-startgame btn btn-primary"
-            onClick={handleSubmit} //voltar a ver isto depois
-
-            /*disabled={selectedLevel === "0"}*/
-          >
-            START GAME
-          </button>
-        </div>
-      </div>
+      
+      
     </div>
   );
 }

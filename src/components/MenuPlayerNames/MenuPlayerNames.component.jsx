@@ -47,17 +47,7 @@ function MenuPlayerNames(props) {
           ></input>
         </div>
       </div>
-      <div className="row">
-          <div className="botao_back h2">
-            <button
-              type="button "
-              className="btn btn-secondary"
-              onClick={resetgame2}
-            > Back
-            </button>
-          </div>
-        </div>
-      <div className="row h2">
+            <div className="row h2">
         <div className="botao-start ">
           <button
             type="submit"
@@ -69,6 +59,17 @@ function MenuPlayerNames(props) {
           </button>
         </div>
       </div>
+      <div className="row">
+          <div className="botao_back h2">
+            <button
+              type="button "
+              className="btn btn-secondary"
+              onClick={resetgame2}
+            > Back
+            </button>
+          </div>
+        </div>
+
     </div>
   );
 }

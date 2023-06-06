@@ -71,7 +71,7 @@ function Game(props) {
         <div className="stuff row">
           <label className="Time text-white">Time: </label>
           <label className="P1_points text-white col">{jogador1} Points</label>
-          <label className="P2_points text-white col">{jogador2} Points</label>
+          <label className="P2_points text-white col" hidden={gameType === false}>{jogador2} Points</label>
         </div>
       </div>
 

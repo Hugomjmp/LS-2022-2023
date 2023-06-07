@@ -1,0 +1,12 @@
+$tamanho-menu-players: 712px;
+
+
+
+.player-names{
+    height: $tamanho-menu-players;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+

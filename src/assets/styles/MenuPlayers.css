@@ -6,4 +6,11 @@
 
 .MenuPlayers {
   margin-bottom: 100px;
+}
+
+.inicio-menu-players {
+  height: 556px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=MenuPlayers.css.map */

@@ -1,9 +1,24 @@
 .titulo-menu {
-  color: white;
+  color: #eda642;
   font-size: 30px;
   height: 100px;
 }
 
-.Menu {
-  margin-bottom: 100px;
+.inicio-menu {
+  height: 656px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.START {
+  background-image: url("/public/assets/images/STARTGAME.jpg");
+  width: 334px;
+  height: 38px;
+}
+
+.TOPSCORE {
+  background-image: url("/public/assets/images/TOPSCORE.jpg");
+  width: 334px;
+  height: 38px;
 }/*# sourceMappingURL=Menu.css.map */

@@ -1,7 +1,7 @@
 $cor: white;
 $tamanho-letra: 30px;
 $tamanho: 100px;
-
+$tamanho-menu: 556px;
 
 .titulo-menu{
     color:$cor;
@@ -11,4 +11,11 @@ $tamanho: 100px;
 }
 .MenuPlayers{
     margin-bottom: $tamanho;
+}
+
+.inicio-menu-players{
+    height: $tamanho-menu;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

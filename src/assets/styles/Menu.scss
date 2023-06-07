@@ -1,14 +1,29 @@
-$cor: white;
+$cor: #eda642;
 $tamanho-letra: 30px;
-$tamanho: 100px;
+$tamanho-titulo: 100px;
+$tamanho-menu: 656px;
 
 
 .titulo-menu{
     color:$cor;
     font-size: $tamanho-letra;
-    height: $tamanho;
+    height: $tamanho-titulo;
     
 }
-.Menu{
-    margin-bottom: $tamanho;
+.inicio-menu{
+    height: $tamanho-menu;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.START{
+    background-image: url("/public/assets/images/STARTGAME.jpg");
+    width: 334px;
+    height: 38px;
+}
+.TOPSCORE{
+    background-image: url("/public/assets/images/TOPSCORE.jpg");
+    width: 334px;
+    height: 38px;
 }

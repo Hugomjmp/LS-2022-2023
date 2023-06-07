@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Calcula_Vencedor } from "../../helpers";
+//import { Calcula_Vencedor } from "../../helpers";
 
 
 const Cell = ({ value, onClick }) => {
@@ -35,10 +35,10 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
       gameStarted,
       playernames,
       gameType,
-      resetgame,
+      resetgame/*,
       firstPlayerToPlay,
       firstPlayerSymbol,
-      secondPlayerSymbol,
+      secondPlayerSymbol,*/
     } = props;
     const [boardState, setBoardState] = useState([
       [['', '', ''], ['', '', ''], ['', '', '']],
@@ -137,13 +137,6 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
       }
     };
   
-    const handleSubBoardClick = (subBoardRow, subBoardCell) => {
-      if (winner) return;
-      if (currentSubBoard === null || currentSubBoard === subBoardRow * 3 + subBoardCell) {
-        setCurrentSubBoard(subBoardRow * 3 + subBoardCell);
-      }
-    };
-
   return (
     <div className="Game" hidden={gameStarted === false}>
       <div className="GameInfo">

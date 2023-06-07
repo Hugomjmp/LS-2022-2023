@@ -1,12 +1,13 @@
 .container-fluid {
   background-color: #282828;
-  height: 110%;
+  background-image: url("/public/assets/images/background.jpg");
+  height: 100%;
 }
 
-.Menu-Game {
-  background-color: rgb(80, 75, 75);
-  border: 20px;
-  border-style: solid;
-  border-color: rgb(82, 43, 43);
-  border-radius: 50px;
-}/*# sourceMappingURL=App.css.map */
+/*.Menu-Game{
+    background-color: $fundo-da-app;
+    border: $borda-tamanho;
+    border-style: $tipo-de-borda;
+    border-color: $cor-da-borda;
+    border-radius: $borda-raio;
+}*//*# sourceMappingURL=App.css.map */

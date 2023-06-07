@@ -20,9 +20,6 @@ function MenuPlayerNames(props) {
     console.log("Nome 1:", player1);
     console.log("Nome 2:", player2);
     gameStarted();
-    // Limpar os campos de entrada
-    //setPlayer1('');
-    //setPlayer2('');
   };
 
   return (
@@ -52,25 +49,25 @@ function MenuPlayerNames(props) {
             </div>
           
           <div className="row h2">
-            <div className="botao-start ">
+            <div className="btn botao-start">
               <button
                 type="submit"
-                className="botao-startgame btn btn-primary"
+                className="botao-startgame"
                 onClick={handleSubmit} //voltar a ver isto depois
                 //disabled={gameType === "true"}
               >
-                START GAME
+                {/*START GAME*/}
               </button>
             </div>
           </div>
           <div className="row">
             <div className="botao_back h2">
               <button
-                type="button "
-                className="btn btn-secondary"
+                type="button"
+                className="btn-back"
                 onClick={resetgame2}
               >
-                Back
+                {/*Back*/}
               </button>
             </div>
           </div>

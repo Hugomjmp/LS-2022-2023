@@ -62,3 +62,9 @@
   .active-sub-board {
     background-color: lightblue;
   }
+
+  .btn-back{
+    background-image: url("/public/assets/images/BACK.jpg");
+    width: 334px;
+    height: 38px;
+}

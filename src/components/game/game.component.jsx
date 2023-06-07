@@ -165,13 +165,14 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
           />
         );
       })}
+      
       {winner && (
-        <div className="winner">
+        <div className="winner text-white">
           O jogador {winner} venceu!
         </div>
       )}
       {!winner && (
-        <div className="player">
+        <div className="player text-white">
           Próximo jogador: {currentPlayer}
         </div>
       )}
@@ -179,22 +180,11 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
     </div>
 
       <div className="linha_mini_menu">
-        <button className="QuitGame btn btn-light" onClick={resetgame}>
-          Quit{" "}
+        <button className="QuitGame btn" onClick={resetgame}>
+          {/*Quit*/}
         </button>
       </div>
     </div>
   );
-}/*
-<div className="sub-board-labels">
-{[...Array(9)].map((_, index) => (
-  <div
-    key={index}
-    className={`sub-board-label ${index === currentSubBoard ? 'active' : ''}`}
-    onClick={() => handleSubBoardClick(index)}
-  >
-    Sub-Tabuleiro {index + 1}
-  </div>
-))}
-</div>*/
+}
 export default Game;

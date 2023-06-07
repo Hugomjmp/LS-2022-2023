@@ -35,11 +35,11 @@ function MenuPlayers(props) {
               <div className="botao_PVE h2">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn_pve"
                   value={"PVE"}
                   onClick={gameType}
                 >
-                  Single Player
+                  {/*Single Player*/}
                 </button>
               </div>
             </div>
@@ -48,11 +48,11 @@ function MenuPlayers(props) {
             <div className="botao_PVP h2">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn_pvp"
                 value={"PVP"}
                 onClick={gameType}
               >
-                Multiplayer
+                {/*Multiplayer*/}
               </button>
             </div>
           </div>
@@ -60,10 +60,10 @@ function MenuPlayers(props) {
             <div className="botao_back h2">
               <button
                 type="button "
-                className="btn btn-secondary"
+                className="btn_back"
                 onClick={resetgame}
               >
-                Back
+                {/*Back*/}
               </button>
             </div>
           </div>

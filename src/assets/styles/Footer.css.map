@@ -1,1 +1,9 @@
-{"version":3,"sources":["Footer.scss","Footer.css"],"names":[],"mappings":"AAIA;EACI,gBALM;EAMN,cALE;ACEN","file":"Footer.css"}
+{
+    "version": 3,
+    "mappings": "AAIA,AAAA,MAAM,CAAA;EACF,SAAS,EALH,KAAK;EAMX,KAAK,EALH,OAAO;CAMZ",
+    "sources": [
+        "Footer.scss"
+    ],
+    "names": [],
+    "file": "Footer.css"
+}

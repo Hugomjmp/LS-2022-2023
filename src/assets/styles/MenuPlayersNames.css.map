@@ -1,1 +1,9 @@
-{"version":3,"sources":["MenuPlayersNames.scss","MenuPlayersNames.css"],"names":[],"mappings":"AAIA;EACI,aALmB;EAMnB,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,sBAAA;ACHJ;;ADMA;EACI,4DAAA;EACA,YAAA;EACA,YAAA;ACHJ;;ADKA;EACI,uDAAA;EACA,YAAA;EACA,YAAA;ACFJ","file":"MenuPlayersNames.css"}
+{
+    "version": 3,
+    "mappings": "AAIA,AAAA,aAAa,CAAA;EACT,MAAM,EALa,KAAK;EAMxB,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;EACvB,cAAc,EAAE,MAAM;CACzB;;AAED,AAAA,gBAAgB,CAAA;EACZ,gBAAgB,EAAE,0CAA0C;EAC5D,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,IAAI;CACf;;AACD,AAAA,SAAS,CAAA;EACL,gBAAgB,EAAE,qCAAqC;EACvD,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,IAAI;CACf",
+    "sources": [
+        "MenuPlayersNames.scss"
+    ],
+    "names": [],
+    "file": "MenuPlayersNames.css"
+}

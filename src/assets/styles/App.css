@@ -1,6 +1,5 @@
 .container-fluid {
   background-color: #282828;
-  background-image: url("/public/assets/images/background.jpg");
   height: 100%;
 }
 
@@ -10,4 +9,5 @@
     border-style: $tipo-de-borda;
     border-color: $cor-da-borda;
     border-radius: $borda-raio;
-}*//*# sourceMappingURL=App.css.map */
+}*/
+/*# sourceMappingURL=App.css.map */

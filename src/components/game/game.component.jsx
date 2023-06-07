@@ -55,11 +55,16 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
     const [currentPlayer, setCurrentPlayer] = useState('X');
     const [currentSubBoard, setCurrentSubBoard] = useState(null);
     const [winner, setWinner] = useState(null);
+    let aux_winner;
+
   
     const handleCellClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
-      if (winner) return;
+      if (winner){
+        console.log("winner winner");
+        console.log("current player" + aux_winner);
+      } 
       if (currentSubBoard !== null && currentSubBoard !== subBoardRow * 3 + subBoardCell) return;
-    
+
       const subBoardIndex = subBoardRow * 3 + subBoardCell;
       const newBoardState = [...boardState];
       const subBoard = newBoardState[subBoardIndex];
@@ -97,6 +102,7 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
           boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowC][colC]
         ) {
           setWinner(boardState[subBoardIndex][rowA][colA]);
+          aux_winner = currentPlayer;
           return;
         }
       }

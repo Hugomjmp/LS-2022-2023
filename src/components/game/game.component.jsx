@@ -2,68 +2,147 @@ import React from "react";
 import { useState } from "react";
 import { Calcula_Vencedor } from "../../helpers";
 
-function Game(props) {
-  const {
-    gameStarted,
-    playernames,
-    gameType,
-    resetgame,
-    firstPlayerToPlay,
-    firstPlayerSymbol,
-    secondPlayerSymbol,
-  } = props;
 
-  const [tabuleiro, setTabuleiro] = useState(Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState(true);
-  const [jogador1, jogador2] = playernames();
+const Cell = ({ value, onClick }) => {
+  return (
+    
+    <button className={"cell"} onClick={onClick}>
+      {value}
+    </button>
+  );
+};
 
-  function handleChange(){// funcao para fazer enable/disable dos tabuleiros
-  }
+const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
+  return (
+    <div className={`sub-board ${isActive ? 'active-sub-board' : ''}`}>
+      {subBoardState.map((row, rowIndex) => (
+        <div key={rowIndex} className="sub-board-row">
+          {row.map((cell, cellIndex) => (
+            <Cell
+              key={cellIndex}
+              value={cell}
+              onClick={() => onCellClick(rowIndex, cellIndex)}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
 
-
-  function selectRandomTable(){
-    let min = 0;
-    let max = 8;
-    let nextTable;
-    nextTable =  Math.floor(Math.random() * (max - min + 1) + min);
-    return nextTable;
-  } 
-
-
-
-
-
-  const handleClick = (index) => {
-    let teste = selectRandomTable();
-    console.log("teste", teste);
-
-    console.log(
-      "entrou no handle click -- primeiro jogador" + firstPlayerToPlay
-    );
-    console.log(
-      "entrou no handle click -- simbolo primeiro jogador" + firstPlayerSymbol
-    );
-    console.log(
-      "entrou no handle click -- simbolo segundo jogador" + secondPlayerSymbol
-    );
-    if (Calcula_Vencedor(tabuleiro) || tabuleiro[index]) {
-      return;
-    }
-    const novoTabuleiro = [...tabuleiro];
-    novoTabuleiro[index] = xIsNext ? "X" : "O";
-    setTabuleiro(novoTabuleiro);
-    setXIsNext(!xIsNext);
-  };
-  const renderSquare = (index) => {
-    return (
-      <button
-        className="square font-weight-bold btn btn-block btn-transparent"
-        onClick={() => handleClick(index)}
-      >
-        {tabuleiro[index]}
-      </button>
-    );
-  };
+  const Game = (props) => {
+    const {
+      gameStarted,
+      playernames,
+      gameType,
+      resetgame,
+      firstPlayerToPlay,
+      firstPlayerSymbol,
+      secondPlayerSymbol,
+    } = props;
+    const [boardState, setBoardState] = useState([
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+    ]);
+    const [jogador1, jogador2] = playernames();
+    const [currentPlayer, setCurrentPlayer] = useState('X');
+    const [currentSubBoard, setCurrentSubBoard] = useState(null);
+    const [winner, setWinner] = useState(null);
+  
+    const handleCellClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
+      if (winner) return;
+      if (currentSubBoard !== null && currentSubBoard !== subBoardRow * 3 + subBoardCell) return;
+    
+      const subBoardIndex = subBoardRow * 3 + subBoardCell;
+      const newBoardState = [...boardState];
+      const subBoard = newBoardState[subBoardIndex];
+      if (subBoard[cellRow][cellCol] === '') {
+        subBoard[cellRow][cellCol] = currentPlayer;
+        setBoardState(newBoardState);
+        checkWinner(newBoardState, subBoardRow, subBoardCell);
+        checkSubBoardWinner(newBoardState, subBoardIndex); // Verificar vencedor do sub-tabuleiro
+        setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
+        setCurrentSubBoard(cellRow * 3 + cellCol);
+      }
+    };
+    
+    const checkSubBoardWinner = (boardState, subBoardIndex) => {
+      const lines = [
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
+        [[0, 0], [1, 0], [2, 0]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]],
+      ];
+    
+      for (let line of lines) {
+        const [a, b, c] = line;
+        const [rowA, colA] = a;
+        const [rowB, colB] = b;
+        const [rowC, colC] = c;
+    
+        if (
+          boardState[subBoardIndex][rowA][colA] !== '' &&
+          boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowB][colB] &&
+          boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowC][colC]
+        ) {
+          setWinner(boardState[subBoardIndex][rowA][colA]);
+          return;
+        }
+      }
+    };
+   
+  
+    const checkWinner = (boardState, subBoardRow, subBoardCell) => {
+      const lines = [
+        // Horizontal lines
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
+        // Vertical lines
+        [[0, 0], [1, 0], [2, 0]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
+        // Diagonal lines
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]],
+      ];
+  
+      for (let line of lines) {
+        const [a, b, c] = line;
+        const [rowA, colA] = a;
+        const [rowB, colB] = b;
+        const [rowC, colC] = c;
+  
+        if (
+          boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] !== '' &&
+          boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] ===
+            boardState[subBoardRow * 3 + rowB][subBoardCell * 3 + colB] &&
+          boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] ===
+            boardState[subBoardRow * 3 + rowC][subBoardCell * 3 + colC]
+        ) {
+          setWinner(boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA]);
+          return;
+        }
+      }
+    };
+  
+    const handleSubBoardClick = (subBoardRow, subBoardCell) => {
+      if (winner) return;
+      if (currentSubBoard === null || currentSubBoard === subBoardRow * 3 + subBoardCell) {
+        setCurrentSubBoard(subBoardRow * 3 + subBoardCell);
+      }
+    };
 
   return (
     <div className="Game" hidden={gameStarted === false}>
@@ -74,348 +153,38 @@ function Game(props) {
           <label className="P2_points text-white col" hidden={gameType === false}>{jogador2} Points</label>
         </div>
       </div>
+{/*-----------------------------------------------------------------*/
+/*|                      tabuleiro do jogo                         |*/
+/*-----------------------------------------------------------------*/}
+      <div className="jogo">
+      {boardState.map((subBoard, subBoardIndex) => {
+        const row = Math.floor(subBoardIndex / 3); // Calcular o número da linha do sub-tabuleiro
+        const col = subBoardIndex % 3; // Calcular o número da coluna do sub-tabuleiro
+        const isActive = subBoardIndex === currentSubBoard;
 
-      <div className="linha_1_a_3 row border-bottom border-dark border-5">
-        <div className="Tabuleiro_1 col border-end border-dark border-5" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Celula_1 d-grid gap-2 col border-end border-white border-5 p-0">
-              {renderSquare(0)}
-            </div>
-            <div className="Celula_2 d-grid gap-2 col border-end border-white border-5 p-0">
-              {renderSquare(1)}
-            </div>
-            <div className="Celula_3 d-grid gap-2 col p-0">
-              {renderSquare(2)}
-            </div>
-          </div>
 
-          <div className="linha_4_a_6 row border-bottom border-white border-5 p-0">
-            <div className="Celula_1 d-grid gap-2 col border-end border-white border-5 p-0">
-              {renderSquare(3)}
-            </div>
-            <div className="Celula_2 d-grid gap-2 col border-end border-white border-5 p-0">
-              {renderSquare(4)}
-            </div>
-            <div className="Celula_3 d-grid gap-2 col p-0">
-              {renderSquare(5)}
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Celula_1 d-grid gap-2 col border-end border-white border-5 p-0">
-              {renderSquare(6)}
-            </div>
-            <div className="Celula_2 d-grid gap-2 col border-end border-white border-5 p-0">
-              {renderSquare(7)}
-            </div>
-            <div className="Celula_3 d-grid gap-2 col p-0">
-              {renderSquare(8)}
-            </div>
-          </div>
+        return (
+          <SubBoard
+            key={subBoardIndex}
+            subBoardState={subBoard}
+            onCellClick={(cellRow, cellCol) => handleCellClick(row, col, cellRow, cellCol)}
+            isActive={isActive}
+          />
+        );
+      })}
+      {winner && (
+        <div className="winner">
+          O jogador {winner} venceu!
         </div>
-        <div className="Tabuleiro_2 col border-end border-dark border-5" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
+      )}
+      {!winner && (
+        <div className="player">
+          Próximo jogador: {currentPlayer}
         </div>
-        <div className="Tabuleiro_3 col" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5" >
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
+      )}
 
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
+    </div>
 
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="linha_4_a_6 row border-bottom border-dark border-5">
-        <div className="Tabuleiro_1 col border-end border-dark border-5" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-        <div className="Tabuleiro_2 col border-end border-dark border-5" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-        <div className="Tabuleiro_3 col" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="linha_7_a_9 row">
-        <div className="Tabuleiro_1 col border-end border-dark border-5" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-        <div className="Tabuleiro_2 col border-end border-dark border-5" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-        <div className="Tabuleiro_3 col" onchange={handleChange}>
-          <div className="linha_1_a_3 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_4_a_6 row border-bottom border-white border-5">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-
-          <div className="linha_7_a_9 row">
-            <div className="Tabuleiro_1 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_2 col border-end border-white border-5">
-              <button className="celula"></button>
-            </div>
-            <div className="Tabuleiro_3 col">
-              <button className="celula"></button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="linha_mini_menu">
         <button className="QuitGame btn btn-light" onClick={resetgame}>
           Quit{" "}
@@ -423,6 +192,16 @@ function Game(props) {
       </div>
     </div>
   );
-}
-
+}/*
+<div className="sub-board-labels">
+{[...Array(9)].map((_, index) => (
+  <div
+    key={index}
+    className={`sub-board-label ${index === currentSubBoard ? 'active' : ''}`}
+    onClick={() => handleSubBoardClick(index)}
+  >
+    Sub-Tabuleiro {index + 1}
+  </div>
+))}
+</div>*/
 export default Game;

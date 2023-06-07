@@ -1,20 +1,64 @@
-.celula {
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  height: 50px;
-  width: 50px;
-}
-
-/*.Tabuleiro_1{
-    height: 100%;
-    min-height: 100%;
-}*/
-/*
-.x_image{
-    background-image: url('https://dictionary.cambridge.org/pt/images/thumb/cross_noun_002_09265.jpg?version=5.0.318');
-    background-size: cover;
-}
-*/
-/*.o_image{
-    background-image: ;
-}*//*# sourceMappingURL=Game.css.map */
+.jogo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    width: 630px;
+    margin: 0 auto;
+  }
+  
+  .winner {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .player {
+    margin-top: 20px;
+    font-size: 24px;
+  }
+  
+  .sub-board-labels {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .sub-board-label {
+    margin: 5px;
+    padding: 5px 10px;
+    border: 1px solid #999;
+    cursor: pointer;
+  }
+  
+  .sub-board-row.active {
+    background-color: #999;
+    color: #fff;
+  }
+  
+  .sub-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 2px solid #333;
+    width: 200px;
+    height: 200px;
+  }
+  .cell {
+    background-color: transparent;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #999;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .sub-board-row {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+  }
+  .active-sub-board {
+    background-color: lightblue;
+  }

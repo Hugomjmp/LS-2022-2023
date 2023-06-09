@@ -1,12 +1,12 @@
 import "./assets/styles/App.css"; //vai buscar o css para a componente App
-import "./assets/styles/MenuPlayers.css"
-import "./assets/styles/MenuPlayersNames.css"
-import Header from "./components/header/header.component";
-import Footer from "./components/footer/footer.component";
-import Menu from "./components/Menu/menu.component";
-import MenuPlayers from "./components/MenuPlayers/menu-players.component";
-import MenuPlayerNames from "./components/MenuPlayerNames/MenuPlayerNames.component"
-import Game from "./components/game/game.component";
+import "./assets/styles/MenuPlayers.css" //vai buscar o css para a componente MenuPlayers
+import "./assets/styles/MenuPlayersNames.css" //vai buscar o css para a componente MenuPlayersNames
+import Header from "./components/header/header.component"; //vai buscar o componente Header
+import Footer from "./components/footer/footer.component"; //vai buscar o componente Footer
+import Menu from "./components/Menu/menu.component"; //vai buscar o componente Menu
+import MenuPlayers from "./components/MenuPlayers/menu-players.component"; //vai buscar o componente MenuPlayers
+import MenuPlayerNames from "./components/MenuPlayerNames/MenuPlayerNames.component" //vai buscar o componente MenuPlayersNames
+import Game from "./components/game/game.component"; //vai buscar o componente Game
 
 import { useState } from "react";
 
@@ -35,11 +35,11 @@ function App() {
 /*-----------------------------------------------------------------*/
 function setRandomPlayers(){
   console.log("entrou setrandom players -- aux_symbol" + aux_symbol );
-  if (aux_firstplayer == 1){
+  if (aux_firstplayer === 1){
 
     setFirstPlayerToPlay("player1");
     console.log("entrou setrandom players -- first player" + firstPlayerToPlay );
-    if (aux_symbol==1){
+    if (aux_symbol === 1){
       setFirstPlayerSymbol("X");
       console.log("simbolo primeiro jogador" + firstPlayerSymbol);
       setSecondPlayerSymbol("O");
@@ -51,7 +51,7 @@ function setRandomPlayers(){
     }
     }else{
       setFirstPlayerToPlay("player2");
-      if (aux_symbol==1){
+      if (aux_symbol === 1){
         setFirstPlayerSymbol("O");
         console.log(firstPlayerSymbol);
         setSecondPlayerSymbol("X");
@@ -63,6 +63,7 @@ function setRandomPlayers(){
     }
 }
 /*-----------------------------------------------------------------*/
+
 /*------------------------------------*/
 /*|   Controla o nome dos jogadores  |*/
 /*------------------------------------*/
@@ -78,6 +79,7 @@ function setRandomPlayers(){
     
     console.log("aqui" + player1nome);
   }
+
 /*-----------------------------------------*/
   function handleMenuJogador() {
     if (menuJogador === false) {

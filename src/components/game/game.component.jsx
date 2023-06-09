@@ -1,6 +1,6 @@
-import React from "react";
+
 import { useState } from "react";
-//import { Calcula_Vencedor } from "../../helpers";
+//import { checkWinner } from "../../helpers";
 
 
 const Cell = ({ value, onClick }) => {
@@ -52,12 +52,14 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
       [['', '', ''], ['', '', ''], ['', '', '']],
     ]);
     const [jogador1, jogador2] = playernames();
+    //console.log("game names:", playernames(0) + playernames(1))
     const [currentPlayer, setCurrentPlayer] = useState('X');
     const [currentSubBoard, setCurrentSubBoard] = useState(null);
     const [winner, setWinner] = useState(null);
-  
+
     const handleCellClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
-      if (winner) return;
+      //if (winner) return;
+      console.log(winner);
       if (currentSubBoard !== null && currentSubBoard !== subBoardRow * 3 + subBoardCell) return;
     
       const subBoardIndex = subBoardRow * 3 + subBoardCell;
@@ -136,7 +138,33 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
         }
       }
     };
-  
+
+/*-----------------------------------------------------------------*/
+/*|                      Reset ao jogo                            |*/
+/*-----------------------------------------------------------------*/
+  const resetaqui = () =>
+  {
+    const apagaconteudomatriz = () =>{
+      const matrizlimpa = [
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      [['', '', ''], ['', '', ''], ['', '', '']],
+      ];
+      setBoardState(matrizlimpa);
+    }
+    apagaconteudomatriz();
+    setCurrentSubBoard(null);
+    setWinner(null);
+    setCurrentPlayer('X');
+    resetgame();
+  }
+//-------------------------------------------------------------------
   return (
     <div className="Game" hidden={gameStarted === false}>
       <div className="GameInfo">
@@ -154,18 +182,20 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
         const row = Math.floor(subBoardIndex / 3); // Calcular o número da linha do sub-tabuleiro
         const col = subBoardIndex % 3; // Calcular o número da coluna do sub-tabuleiro
         const isActive = subBoardIndex === currentSubBoard;
-
+        
 
         return (
           <SubBoard
+
             key={subBoardIndex}
             subBoardState={subBoard}
             onCellClick={(cellRow, cellCol) => handleCellClick(row, col, cellRow, cellCol)}
             isActive={isActive}
+            
           />
         );
       })}
-      
+      {/*-------------------------------------------------------------------------- */}
       {winner && (
         <div className="winner text-white">
           O jogador {winner} venceu!
@@ -178,13 +208,18 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
       )}
 
     </div>
+{/*-------------------------------------------------------------------------- */}
 
+{/*-----------------------------------------------------------------*/
+/*|                      Botão Quit do jogo                        |*/
+/*------------------------------------------------------------------*/}
       <div className="linha_mini_menu">
-        <button className="QuitGame btn" onClick={resetgame}>
+        <button className="QuitGame btn" onClick={resetaqui}>
           {/*Quit*/}
         </button>
       </div>
     </div>
+//------------------------------------------------------------------------
   );
 }
 export default Game;

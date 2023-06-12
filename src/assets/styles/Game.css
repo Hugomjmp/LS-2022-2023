@@ -63,6 +63,10 @@
     background-color: lightblue;
   }
 
+  .inactive-sub-board {
+    background-color: red;
+  }
+
   .btn-back{
     background-image: url("/public/assets/images/BACK.jpg");
     width: 334px;

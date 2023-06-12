@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 //import { Calcula_Vencedor } from "../../helpers";
+import { hasWinner } from "../../helpers";
+
+var FIRSTPLAYFLAG = true;
 
 
 const Cell = ({ value, onClick }) => {
@@ -14,7 +17,7 @@ const Cell = ({ value, onClick }) => {
 
 const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
   return (
-    <div className={`sub-board ${isActive ? 'active-sub-board' : ''}`}>
+    <div className={`sub-board ${isActive ? 'active-sub-board' : 'inactive-sub-board'}`}>
       {subBoardState.map((row, rowIndex) => (
         <div key={rowIndex} className="sub-board-row">
           {row.map((cell, cellIndex) => (
@@ -30,7 +33,9 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
   );
 };
 
+
   const Game = (props) => {
+
     const {
       gameStarted,
       playernames,
@@ -40,6 +45,7 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
       firstPlayerSymbol,
       secondPlayerSymbol,*/
     } = props;
+
     const [boardState, setBoardState] = useState([
       [['', '', ''], ['', '', ''], ['', '', '']],
       [['', '', ''], ['', '', ''], ['', '', '']],
@@ -55,21 +61,108 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
     const [currentPlayer, setCurrentPlayer] = useState('X');
     const [currentSubBoard, setCurrentSubBoard] = useState(null);
     const [winner, setWinner] = useState(null);
-  
-    const handleCellClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
-      if (winner) return;
-      if (currentSubBoard !== null && currentSubBoard !== subBoardRow * 3 + subBoardCell) return;
+    const [completedBoard,setCompletedBoard]=useState([
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+    ]);
+    const [previousPlayer, setPreviousPlayer]=useState('');
+    const [previousSubBoard, setPreviousSubBoard] = useState(null);
     
+    
+
+
+    useEffect(()=> {
+      
+        console.log("inicio completed board" +completedBoard );
+        console.log("current player useeffect" + previousPlayer);
+        const auxCompletedBoard = [...completedBoard];
+        auxCompletedBoard[previousSubBoard] = previousPlayer;
+        setCompletedBoard(auxCompletedBoard);
+        console.log("completedboard"+ completedBoard);
+        disableboards();
+    }, [winner]);
+
+    function disableboards(){
+      console.log("entrou");
+    }
+    useEffect(()=>{
+      //const aux_CompletedBoard = [...completedBoard];
+      let min = 0;
+      let max = 8;
+      let nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+      let indexes=[];
+      console.log(" useeffect --- indice ANTES do while" + nextSubBoardIndex);
+      
+
+
+      const occupiedIndexes = completedBoard.reduce((indexes, value, index) => {
+        if (value === 'X' || value === 'O') {
+          indexes.push(index);
+        }
+        return indexes;
+      },[]);
+      console.log("indexes", occupiedIndexes);
+
+      while(occupiedIndexes.includes(nextSubBoardIndex)==true) {
+        console.log("ENTROU NO INCLUDES" + occupiedIndexes.includes(nextSubBoardIndex));
+        nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+        console.log("ENTROU NO INCLUDES --- SUBBOARD INDEX" + nextSubBoardIndex);
+      }
+
+      console.log("useeffect --- nextSubBoardIndex depois do occupied indexes" +nextSubBoardIndex );
+      
+
+      /*for (let i=0; i<=completedBoard.length; i++){
+        if (i==nextSubBoardIndex){
+          console.log("entrou no iff do FOOOOOR");
+         // i=0;
+        }
+        console.log(" USEEFFECT FOOOOOR ---completedboard"+completedBoard[i] + i);
+      }
+      while(completedBoard[nextSubBoardIndex]==='X'||completedBoard[nextSubBoardIndex]==='O') {
+        nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+        console.log(" useeffect --- indice DENTRO do while" + nextSubBoardIndex);
+        console.log(" USEEFFECT ---completedboard"+ completedBoard[nextSubBoardIndex]);
+      }*/
+      
+      setCurrentSubBoard(nextSubBoardIndex);
+    },[currentPlayer, completedBoard]);
+
+
+    const handleCellClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
+      if (winner) {console.log("enbtrou no winner")};
+      if (currentSubBoard !== null && currentSubBoard !== subBoardRow * 3 + subBoardCell) return;
+
       const subBoardIndex = subBoardRow * 3 + subBoardCell;
+      let min = 0;
+      let max = 8;
+      let nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+
       const newBoardState = [...boardState];
       const subBoard = newBoardState[subBoardIndex];
       if (subBoard[cellRow][cellCol] === '') {
+        setPreviousPlayer(currentPlayer);
+        setPreviousSubBoard(currentSubBoard);
         subBoard[cellRow][cellCol] = currentPlayer;
         setBoardState(newBoardState);
         checkWinner(newBoardState, subBoardRow, subBoardCell);
         checkSubBoardWinner(newBoardState, subBoardIndex); // Verificar vencedor do sub-tabuleiro
         setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
-        setCurrentSubBoard(cellRow * 3 + cellCol);
+        /*console.log("nextSubBoardIndex antes do WHILE" +nextSubBoardIndex );
+        do {
+          nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+          console.log(" indice DENTRO do while" + nextSubBoardIndex);
+          console.log(" completedboard dentro do while" + completedBoard[nextSubBoardIndex]);
+        }while(completedBoard[nextSubBoardIndex]==='X'||completedBoard[nextSubBoardIndex]==='O');
+        console.log("nextSubBoardIndex depois do WHILE" +nextSubBoardIndex );
+        setCurrentSubBoard(nextSubBoardIndex);*/
       }
     };
     
@@ -96,12 +189,14 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
           boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowB][colB] &&
           boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowC][colC]
         ) {
+          console.log("entrou no subwinner");
           setWinner(boardState[subBoardIndex][rowA][colA]);
+          
           return;
         }
       }
     };
-   
+  
   
     const checkWinner = (boardState, subBoardRow, subBoardCell) => {
       const lines = [
@@ -131,7 +226,8 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
           boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] ===
             boardState[subBoardRow * 3 + rowC][subBoardCell * 3 + colC]
         ) {
-          setWinner(boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA]);
+          console.log("entrou no winner funoca");
+          /*setWinner(boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA]);*/
           return;
         }
       }
@@ -151,17 +247,16 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
 /*-----------------------------------------------------------------*/}
       <div className="jogo">
       {boardState.map((subBoard, subBoardIndex) => {
-        const row = Math.floor(subBoardIndex / 3); // Calcular o número da linha do sub-tabuleiro
-        const col = subBoardIndex % 3; // Calcular o número da coluna do sub-tabuleiro
-        const isActive = subBoardIndex === currentSubBoard;
-
-
+        const isActive =  subBoardIndex === currentSubBoard;
+        let row = Math.floor(subBoardIndex / 3); // Calcular o número da linha do sub-tabuleiro
+        let col = subBoardIndex % 3; // Calcular o número da coluna do sub-tabuleiro
         return (
           <SubBoard
             key={subBoardIndex}
             subBoardState={subBoard}
             onCellClick={(cellRow, cellCol) => handleCellClick(row, col, cellRow, cellCol)}
             isActive={isActive}
+
           />
         );
       })}

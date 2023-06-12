@@ -1,7 +1,7 @@
 $cor: white;
 $tamanho-letra: 30px;
 $tamanho: 100px;
-
+$tamanho-menu: 556px;
 
 .titulo-menu{
     color:$cor;
@@ -12,3 +12,28 @@ $tamanho: 100px;
 .MenuPlayers{
     margin-bottom: $tamanho;
 }
+
+.inicio-menu-players{
+    height: $tamanho-menu;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_pve{
+    background-image: url("/public/assets/images/SINGLEPLAYER.jpg");
+    width: 334px;
+    height: 38px;
+}
+.btn_pvp{
+    background-image: url("/public/assets/images/MULTIPLAYER.jpg");
+    width: 334px;
+    height: 38px;
+}
+.btn_back{
+    background-image: url("/public/assets/images/BACK.jpg");
+    width: 334px;
+    height: 38px;
+}
+
+

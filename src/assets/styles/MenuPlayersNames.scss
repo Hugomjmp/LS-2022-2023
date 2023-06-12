@@ -1,0 +1,22 @@
+$tamanho-menu-players: 712px;
+
+
+
+.player-names{
+    height: $tamanho-menu-players;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.botao-startgame{
+    background-image: url("/public/assets/images/STARTGAME.jpg");
+    width: 334px;
+    height: 38px;
+}
+.QuitGame{
+    background-image: url("/public/assets/images/QUIT.jpg");
+    width: 334px;
+    height: 38px;
+}

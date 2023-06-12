@@ -1,0 +1,19 @@
+.player-names {
+  height: 712px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.botao-startgame {
+  background-image: url("/public/assets/images/STARTGAME.jpg");
+  width: 334px;
+  height: 38px;
+}
+
+.QuitGame {
+  background-image: url("/public/assets/images/QUIT.jpg");
+  width: 334px;
+  height: 38px;
+}/*# sourceMappingURL=MenuPlayersNames.css.map */

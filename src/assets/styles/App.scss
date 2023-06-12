@@ -1,5 +1,5 @@
 $cor-de-fundo: #282828;
-$tamanho-pagina: 110%;
+$tamanho-pagina: 100%;
 $fundo-da-app: rgb(80, 75, 75);
 $borda-tamanho: 20px;
 $tipo-de-borda: solid;
@@ -10,13 +10,14 @@ $borda-raio: 50px;
 
 .container-fluid{
     background-color: $cor-de-fundo;
+    background-image: url("/public/assets/images/background.jpg");
     height: $tamanho-pagina;
 
 }
-.Menu-Game{
+/*.Menu-Game{
     background-color: $fundo-da-app;
     border: $borda-tamanho;
     border-style: $tipo-de-borda;
     border-color: $cor-da-borda;
     border-radius: $borda-raio;
-}
+}*/

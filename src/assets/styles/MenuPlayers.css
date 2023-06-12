@@ -6,4 +6,29 @@
 
 .MenuPlayers {
   margin-bottom: 100px;
+}
+
+.inicio-menu-players {
+  height: 556px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn_pve {
+  background-image: url("/public/assets/images/SINGLEPLAYER.jpg");
+  width: 334px;
+  height: 38px;
+}
+
+.btn_pvp {
+  background-image: url("/public/assets/images/MULTIPLAYER.jpg");
+  width: 334px;
+  height: 38px;
+}
+
+.btn_back {
+  background-image: url("/public/assets/images/BACK.jpg");
+  width: 334px;
+  height: 38px;
 }/*# sourceMappingURL=MenuPlayers.css.map */

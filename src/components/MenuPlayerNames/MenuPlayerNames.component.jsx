@@ -84,8 +84,8 @@ function MenuPlayerNames(props) {
     }
     
 
-    console.log("Nome 1:", player1);
-    console.log("Nome 2:", player2);
+    //console.log("Nome 1:", player1);
+    //console.log("Nome 2:", player2);
     gameStarted();
   };
 

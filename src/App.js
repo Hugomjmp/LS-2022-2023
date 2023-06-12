@@ -1,6 +1,6 @@
-import "./assets/styles/App.css"; //vai buscar o css para a componente App
-import "./assets/styles/MenuPlayers.css" //vai buscar o css para a componente MenuPlayers
-import "./assets/styles/MenuPlayersNames.css" //vai buscar o css para a componente MenuPlayersNames
+
+
+
 import Header from "./components/header/header.component"; //vai buscar o componente Header
 import Footer from "./components/footer/footer.component"; //vai buscar o componente Footer
 import Menu from "./components/Menu/menu.component"; //vai buscar o componente Menu
@@ -77,7 +77,7 @@ function setRandomPlayers(){
       
     }
     
-    console.log("aqui" + player1nome);
+    //console.log("aqui" + player1nome);
   }
 
 /*-----------------------------------------*/
@@ -85,11 +85,11 @@ function setRandomPlayers(){
     if (menuJogador === false) {
       setMenuJogador(true);
       
-      console.log("Saiu do menu Principal = " + !menuJogador);
+      //console.log("Saiu do menu Principal = " + !menuJogador);
     } else {
       
       setMenuJogador(false);
-      console.log("aqui 2 " + menuJogador);
+      //console.log("aqui 2 " + menuJogador);
     }
   }
 
@@ -121,10 +121,10 @@ function handleResetGame(){
     if (gameStarted === false) {
       setRandomPlayers();
       setGameStarted(true);
-      console.log("Inicia Jogo " + gameStarted);
+      //console.log("Inicia Jogo " + gameStarted);
     } else {
       setGameStarted(false);
-      console.log("Termina Jogo " + gameStarted);
+      //console.log("Termina Jogo " + gameStarted);
     }
   }
 
@@ -142,17 +142,18 @@ function handleResetGame(){
         setGameType(value);
         setMenuNomeJogador(true);
         //setMenuJogador(false);
-        console.log("-> Menu de Jogadores " + menuNomeJogador);
-        console.log("Selecionou PVE " + gameType);
+        //console.log("-> Menu de Jogadores " + menuNomeJogador);
+       // console.log("Selecionou PVE " + gameType);
         break;
       // Level: jogador vs jogador
       case "PVP":
         setGameType(value);
         setMenuNomeJogador(true);
-        console.log("-> Menu de Jogadores " + menuNomeJogador);
-        console.log("Selecionou PVP " + gameType);
+        //console.log("-> Menu de Jogadores " + menuNomeJogador);
+        //console.log("Selecionou PVP " + gameType);
         break;
     }
+
   }
 
 
@@ -168,14 +169,14 @@ function handleResetGame(){
           {menuJogador ? null :(
           <Menu 
           menuJogador={handleMenuJogador}
-          ></Menu>
+          />
         )}
         {gameStarted + menuNomeJogador ? null : (
           <MenuPlayers 
           menuJogador={menuJogador}
           gameType={handleGameType}
           resetgame={handleResetGame}
-          ></MenuPlayers>
+         />
           )}
         {gameStarted + !menuNomeJogador ? null : (
           <MenuPlayerNames 
@@ -184,8 +185,9 @@ function handleResetGame(){
           gameType={gameType}
           playernames={handleplayernames}
           resetgame2={handleResetGameParcial}
-          ></MenuPlayerNames>
+          />
           )}
+          {gameStarted && ( // para  prevenir que o game seja renderizado logo no inicio e depois é que esconde
           <Game 
           resetgame={handleResetGame}
           gameStarted={gameStarted}
@@ -195,7 +197,8 @@ function handleResetGame(){
           firstPlayerSymbol={firstPlayerSymbol}
           secondPlayerSymbol={secondPlayerSymbol}
           setRandomPlayers={setRandomPlayers}
-          ></Game>
+          />
+          )};
         </div>
         <div className="col-1"></div>
       </div>

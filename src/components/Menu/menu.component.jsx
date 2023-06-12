@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 function Menu(props) {
   const { menuJogador } = props;
 

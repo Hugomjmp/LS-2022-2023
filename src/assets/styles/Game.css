@@ -17,33 +17,33 @@
     font-size: 24px;
   }
   
-  .sub-board-labels {
+  .sub-tabuleiro-labels {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
   
-  .sub-board-label {
+  .sub-tabuleiro-label {
     margin: 5px;
     padding: 5px 10px;
     border: 1px solid #999;
     cursor: pointer;
   }
   
-  .sub-board-row.active {
+  .sub-tabuleiro-row.active {
     background-color: #999;
     color: #fff;
   }
   
-  .sub-board {
+  .sub-tabuleiro {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border: 2px solid #333;
     width: 200px;
     height: 200px;
   }
-  .cell {
+  .celula {
     background-color: transparent;
     flex: 1;
     display: flex;
@@ -52,14 +52,15 @@
     border: 1px solid #999;
     font-size: 24px;
     cursor: pointer;
+    color: red;
   }
   
-  .sub-board-row {
+  .sub-tabuleiro-row {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     width: 100%;
   }
-  .active-sub-board {
+  .active-sub-tabuleiro {
     background-color: lightblue;
   }
 
@@ -68,6 +69,6 @@
     width: 334px;
     height: 38px;
 }
-.sub-board .bola{
+.sub-tabuleiro .bola{
   background-color: red;
 }

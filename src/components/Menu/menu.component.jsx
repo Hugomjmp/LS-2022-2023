@@ -17,15 +17,6 @@ function Menu(props) {
               </button>
             </div>
           </div>
-          <div className="row">
-            <div className="botao_score h2">
-              <button 
-              type="button" 
-              className="TOPSCORE">
-                {/*Top Score*/}
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

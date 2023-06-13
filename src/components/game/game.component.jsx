@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+//import { resetaqui } from "../../helpers/resetaqui";
 import { TIMEOUTGAME } from "../../constants/index";
 
 
@@ -61,7 +62,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive }) => {
       ['', '', ''],
       ['', '', ''],
     ]);
-    //const [timer, setTimer] = useState(TIMEOUTGAME); // use state para o atraso da jogada do CPU, se não, não vejo o cpu a jogar :|
+ 
 
     const handleCelulaClick = (subTabuleiroRow, subTabuleiroCelula, celulaRow, celulaCol) => {
       //if (winner) return;
@@ -81,51 +82,48 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive }) => {
       }
     };
     
-    const checksubTabuleiroWinner = (boardState, subTabuleiroIndex) => {
+    const checksubTabuleiroWinner = (boardState, subBoardIndex) => { //verifica vitoria no subtabuleiro
       const lines = [
-        [[0, 0], [0, 1], [0, 2]],
-        [[1, 0], [1, 1], [1, 2]],
-        [[2, 0], [2, 1], [2, 2]],
-        [[0, 0], [1, 0], [2, 0]],
-        [[0, 1], [1, 1], [2, 1]],
-        [[0, 2], [1, 2], [2, 2]],
-        [[0, 0], [1, 1], [2, 2]],
-        [[0, 2], [1, 1], [2, 0]],
+        [[0, 0], [0, 1], [0, 2]], //1ª linha
+        [[1, 0], [1, 1], [1, 2]], //2ª linha
+        [[2, 0], [2, 1], [2, 2]], //3ª linha
+        [[0, 0], [1, 0], [2, 0]], //1ª coluna
+        [[0, 1], [1, 1], [2, 1]], //2ª coluna
+        [[0, 2], [1, 2], [2, 2]], //3ª coluna
+        [[0, 0], [1, 1], [2, 2]], //diagonal
+        [[0, 2], [1, 1], [2, 0]], //diagonal
       ];
     
-      for (let i = 0; i < lines.length; i++) {
-        const [[row1, col1], [row2, col2], [row3, col3]] = lines[i];
-        const cell1 = boardState[subTabuleiroIndex][row1][col1];
-        const cell2 = boardState[subTabuleiroIndex][row2][col2];
-        const cell3 = boardState[subTabuleiroIndex][row3][col3];
-        if (cell1 !== '' && cell1 === cell2 && cell1 === cell3) {
-          const newSubTabuleiroResults = [...subTabuleiroResults];
-          newSubTabuleiroResults[subTabuleiroIndex] = currentPlayer;
-          setSubTabuleiroResults(newSubTabuleiroResults);
+      for (let line of lines) {
+        const [a, b, c] = line;
+        const [rowA, colA] = a;
+        const [rowB, colB] = b;
+        const [rowC, colC] = c;
+    
+        if (
+          boardState[subBoardIndex][rowA][colA] !== '' &&
+          boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowB][colB] &&
+          boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowC][colC]
+        ) {
+          setWinner(boardState[subBoardIndex][rowA][colA]);
           return;
         }
       }
-
-      const isSubTabuleiroFull = boardState[subTabuleiroIndex].every(row => row.every(cell => cell !== ''));
-      if (isSubTabuleiroFull) {
-        const newSubTabuleiroResults = [...subTabuleiroResults];
-        newSubTabuleiroResults[subTabuleiroIndex] = 'draw';
-        setSubTabuleiroResults(newSubTabuleiroResults);
-      }
     };
+    
    
   
-    const checkWinner = (boardState, subTabuleiroRow, subTabuleiroCelula) => {
+    const checkWinner = (boardState, subTabuleiroRow, subTabuleiroCelula) => { //verifica vitoria no tabuleiro geral
       const lines = [
-        // Horizontal lines
+        // linhas horizontais!
         [[0, 0], [0, 1], [0, 2]],
         [[1, 0], [1, 1], [1, 2]],
         [[2, 0], [2, 1], [2, 2]],
-        // Vertical lines
+        // Linhas Verticais
         [[0, 0], [1, 0], [2, 0]],
         [[0, 1], [1, 1], [2, 1]],
         [[0, 2], [1, 2], [2, 2]],
-        // Diagonal lines
+        // Linhas Diagonais
         [[0, 0], [1, 1], [2, 2]],
         [[0, 2], [1, 1], [2, 0]],
       ];
@@ -149,31 +147,34 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive }) => {
       }
     };
 
+
+    
+
 /*-----------------------------------------------------------------*/
 /*|                      Reset ao jogo                            |*/
 /*-----------------------------------------------------------------*/
-  const resetaqui = () =>
-  {
-    const apagaconteudomatriz = () =>{
-      const matrizlimpa = [
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      [['', '', ''], ['', '', ''], ['', '', '']],
-      ];
-      setBoardState(matrizlimpa);
-    }
-    apagaconteudomatriz();
-    setCurrentSubTabuleiro(null);
-    setWinner(null);
-    setCurrentPlayer('X');
-    resetgame();
+const resetaqui = () =>
+{
+  const apagaconteudomatriz = () =>{
+    const matrizlimpa = [
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    [['', '', ''], ['', '', ''], ['', '', '']],
+    ];
+    setBoardState(matrizlimpa);
   }
+  apagaconteudomatriz();
+  setCurrentSubTabuleiro(null);
+  setWinner(null);
+  setCurrentPlayer('X');
+  resetgame();
+}
 //-------------------------------------------------------------------
 
 /*-----------------------------------------------------------------*/
@@ -181,20 +182,19 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive }) => {
 /*-----------------------------------------------------------------*/
 const [jogadaCPU, setJogadaCPU] = useState(false);
 useEffect(() => {
-if (currentPlayer === "O" && gameType === "PVE"){
-  console.log("executou");
-  setJogadaCPU(true);
-}else{
-  setJogadaCPU(false);
-}
-
+  if (currentPlayer === "O" && gameType === "PVE") {
+    console.log("executou");
+    setJogadaCPU(true);
+  } else {
+    setJogadaCPU(false);
+  }
 }, [currentPlayer, gameType]);
 
 useEffect(() => {
   // Verifica se é a vez do jogador de CPU jogar
   if (currentPlayer === "O" && jogadaCPU) {
     jogaCPU(); // Faz a jogada da CPU
-  } 
+  }
 }, [currentPlayer, jogadaCPU]);
 
 const jogaCPU = () => {
@@ -205,7 +205,7 @@ const jogaCPU = () => {
   const emptyCells = [];
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 3; col++) {
-      if (boardState[activeSubTabuleiroIndex][row][col] === '') {
+      if (boardState[activeSubTabuleiroIndex][row][col] === "") {
         emptyCells.push({ row, col });
       }
     }

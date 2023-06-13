@@ -4,7 +4,7 @@ import { useState } from "react";
 import { hasWinner } from "../../helpers";
 
 var FIRSTPLAYFLAG = true;
-
+var AUXTABULEIROCHEIO = true;
 
 const Cell = ({ value, onClick }) => {
   return (
@@ -74,7 +74,7 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
     ]);
     const [previousPlayer, setPreviousPlayer]=useState('');
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
-    
+    const []=useState();
     
 
 
@@ -97,17 +97,18 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
       let min = 0;
       let max = 8;
       let nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
-      let indexes=[];
+      
       console.log(" useeffect --- indice ANTES do while" + nextSubBoardIndex);
       
 
 
       const occupiedIndexes = completedBoard.reduce((indexes, value, index) => {
-        if (value === 'X' || value === 'O') {
+        if (value === 'X' || value === 'O' || value === 'tie' ) {
           indexes.push(index);
         }
         return indexes;
       },[]);
+
       console.log("indexes", occupiedIndexes);
 
       while(occupiedIndexes.includes(nextSubBoardIndex)==true) {
@@ -147,6 +148,7 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
 
       const newBoardState = [...boardState];
       const subBoard = newBoardState[subBoardIndex];
+
       if (subBoard[cellRow][cellCol] === '') {
         setPreviousPlayer(currentPlayer);
         setPreviousSubBoard(currentSubBoard);
@@ -155,14 +157,7 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
         checkWinner(newBoardState, subBoardRow, subBoardCell);
         checkSubBoardWinner(newBoardState, subBoardIndex); // Verificar vencedor do sub-tabuleiro
         setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
-        /*console.log("nextSubBoardIndex antes do WHILE" +nextSubBoardIndex );
-        do {
-          nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
-          console.log(" indice DENTRO do while" + nextSubBoardIndex);
-          console.log(" completedboard dentro do while" + completedBoard[nextSubBoardIndex]);
-        }while(completedBoard[nextSubBoardIndex]==='X'||completedBoard[nextSubBoardIndex]==='O');
-        console.log("nextSubBoardIndex depois do WHILE" +nextSubBoardIndex );
-        setCurrentSubBoard(nextSubBoardIndex);*/
+
       }
     };
     
@@ -177,24 +172,34 @@ const SubBoard = ({ subBoardState, onCellClick, isActive }) => {
         [[0, 0], [1, 1], [2, 2]],
         [[0, 2], [1, 1], [2, 0]],
       ];
-    
+      
       for (let line of lines) {
         const [a, b, c] = line;
-        const [rowA, colA] = a;
-        const [rowB, colB] = b;
-        const [rowC, colC] = c;
-    
+        const [rowA, ColA] = a;
+        const [rowb, ColB] = b;
+        const [rowC, ColC] = c;
         if (
-          boardState[subBoardIndex][rowA][colA] !== '' &&
-          boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowB][colB] &&
-          boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowC][colC]
+          boardState[subBoardIndex][rowA][ColA] !== '' &&
+          boardState[subBoardIndex][rowA][ColA] === boardState[subBoardIndex][rowb][ColB] &&
+          boardState[subBoardIndex][rowA][ColA] === boardState[subBoardIndex][rowC][ColC]
         ) {
           console.log("entrou no subwinner");
-          setWinner(boardState[subBoardIndex][rowA][colA]);
-          
+          setWinner(boardState[subBoardIndex][rowA][ColA]);
+          //auxTabuleiroCheio = false;
           return;
         }
+            // Verifica se o subtabuleiro está preenchido
+    if (boardState[subBoardIndex][rowA][ColA] === '') {
+      AUXTABULEIROCHEIO = false;
+    }
       }
+
+  // Se o subtabuleiro estiver preenchido e não houver um vencedor, é um empate
+  if (AUXTABULEIROCHEIO) {
+    setWinner('tie');
+    //boardState[subBoardIndex]
+    console.log("empate");
+  }
     };
   
   

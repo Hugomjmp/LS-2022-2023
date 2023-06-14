@@ -88,7 +88,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
     ]);
     const [previousPlayer, setPreviousPlayer] = useState('');
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
-    const [] = useState();
+    //const [] = useState();
 
 
     useEffect(()=> {

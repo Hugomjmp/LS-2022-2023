@@ -4,7 +4,7 @@
   grid-gap: 10px;
   width: 630px;
   margin: 0 auto;
-  background-color: #11213a;
+  background-color: #333;
 }
 
 .stuff {
@@ -83,33 +83,19 @@
 }
 
 .stuff {
-  background-color: #11213a;
+  background-color: #333;
 }
 
-.P1.active.X {
-  color: #06bcad;
+.P1.active {
+  color: rgb(255, 145, 0);
   font-size: large;
   font-weight: bolder;
   /*background-color: red;*/
 }
-.O{
-  color: #d8a621;
-  font-weight: bolder;
-}
-.X{
-  color: #06bcad;
-  font-weight: bolder;
-}
-.P2.active.O {
-  color: #d8a621;
+
+.P2.active {
+  color: green;
   font-size: large;
   font-weight: bolder;
   /*background-color: orange;*/
 }/*# sourceMappingURL=game.css.map */
-
-.sub-tabuleiro.X{
-  background-color: #06bcad96;
-}
-.sub-tabuleiro.O{
-  background-color:#d8a721a9;
-}

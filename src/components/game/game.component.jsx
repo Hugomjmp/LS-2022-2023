@@ -19,7 +19,7 @@ const Celula = ({ value, onClick }) => {
   }
 }*/
 
-const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive, completedBoard}) => {
+const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
  
   return (
     <div className={`sub-tabuleiro ${isActive ? 'active-sub-tabuleiro' : ''}`}>
@@ -89,7 +89,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive, completedBoa
     const [previousPlayer, setPreviousPlayer] = useState('');
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
     const [] = useState();
- 
+
 
     useEffect(()=> {
       

@@ -85,26 +85,29 @@
 .stuff {
   background-color: #333;
 }
-.X{
+
+.X {
   color: #0ac0b1;
   font-size: larger;
   font-weight: bolder;
 }
-.O{
+
+.O {
   color: #d7a727;
   font-size: larger;
   font-weight: bolder;
 }
-.P1.active .O{
+
+.P1.active .O {
   color: #d7a727;
   font-size: larger;
   font-weight: bolder;
   /*background-color: red;*/
 }
 
-.P2.active .X{
+.P2.active .X {
   color: #0ac0b1;
   font-size: larger;
   font-weight: bolder;
   /*background-color: orange;*/
-}/*# sourceMappingURL=game.css.map */
+} /*# sourceMappingURL=game.css.map */

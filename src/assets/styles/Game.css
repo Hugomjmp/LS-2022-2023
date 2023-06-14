@@ -1,75 +1,115 @@
 .jogo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
-    width: 630px;
-    margin: 0 auto;
-    background-color: #333;
-  }
-  
-  .winner {
-    margin-top: 20px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .player {
-    margin-top: 20px;
-    font-size: 24px;
-  }
-  
-  .sub-tabuleiro-labels {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .sub-tabuleiro-label {
-    margin: 5px;
-    padding: 5px 10px;
-    border: 1px solid #999;
-    cursor: pointer;
-  }
-  
-  .sub-tabuleiro-row.active {
-    background-color: #999;
-    color: #fff;
-  }
-  
-  .sub-tabuleiro {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 2px solid #333;
-    width: 200px;
-    height: 200px;
-  }
-  .celula {
-    background-color: transparent;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #999;
-    font-size: 24px;
-    cursor: pointer;
-    color: red;
-  }
-  
-  .sub-tabuleiro-row {
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    width: 100%;
-  }
-  .active-sub-tabuleiro {
-    background-color: lightblue;
-  }
-
-  .btn-back{
-    background-image: url("/public/assets/images/BACK.jpg");
-    width: 334px;
-    height: 38px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  width: 630px;
+  margin: 0 auto;
+  background-color: #11213a;
 }
-.sub-tabuleiro .bola{
+
+.stuff {
+  width: 630px;
+  margin: 0 auto;
+}
+
+.winner {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.player {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.sub-tabuleiro-labels {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sub-tabuleiro-label {
+  margin: 5px;
+  padding: 5px 10px;
+  border: 1px solid #999;
+  cursor: pointer;
+}
+
+.sub-tabuleiro-row.active {
+  background-color: #999;
+  color: #fff;
+}
+
+.sub-tabuleiro {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid #333;
+  width: 200px;
+  height: 200px;
+}
+
+.celula {
+  background-color: transparent;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #999;
+  font-size: 24px;
+  cursor: pointer;
+  /*color: red;*/
+}
+
+.sub-tabuleiro-row {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+}
+
+.active-sub-tabuleiro {
+  background-color: lightblue;
+}
+
+.btn-back {
+  background-image: url("/public/assets/images/BACK.jpg");
+  width: 334px;
+  height: 38px;
+}
+
+.sub-tabuleiro .bola {
   background-color: red;
+}
+
+.stuff {
+  background-color: #11213a;
+}
+
+.P1.active.X {
+  color: #06bcad;
+  font-size: large;
+  font-weight: bolder;
+  /*background-color: red;*/
+}
+.O{
+  color: #d8a621;
+  font-weight: bolder;
+}
+.X{
+  color: #06bcad;
+  font-weight: bolder;
+}
+.P2.active.O {
+  color: #d8a621;
+  font-size: large;
+  font-weight: bolder;
+  /*background-color: orange;*/
+}/*# sourceMappingURL=game.css.map */
+
+.sub-tabuleiro.X{
+  background-color: #06bcad96;
+}
+.sub-tabuleiro.O{
+  background-color:#d8a721a9;
 }

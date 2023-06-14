@@ -76,15 +76,15 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
     const [currentSubTabuleiro, setCurrentSubTabuleiro] = useState(null);
     const [winner, setWinner] = useState(null);
     const [completedBoard,setCompletedBoard] = useState([
-      ['X'],
-      ['X'],
-      ['O'],
-      ['X'],
-      ['O'],
-      ['O'],
-      ['X'],
-      ['O'],
-      ['X'],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
+      [''],
     ]);
     const [previousPlayer, setPreviousPlayer] = useState('');
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
@@ -415,16 +415,8 @@ const activePlayer = currentPlayer;
           );
         })}
         {/*-------------------------------------------------------------------------- */}
-
-        {winner && (
-          <div className="winner text-white">O jogador {winner} venceu!</div>
-        )}
-        {!winner && (
-          <div className="player text-white">
-            Próximo jogador: {jogadaCPU ? "CPU" : currentPlayer}
-          </div>
-        )}
       </div>
+
       {/*-------------------------------------------------------------------------- */}
 
       {/*-----------------------------------------------------------------*/

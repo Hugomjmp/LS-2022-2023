@@ -4,7 +4,7 @@
   grid-gap: 10px;
   width: 630px;
   margin: 0 auto;
-  background-color: #333;
+  background-color: #11213a;
 }
 
 .stuff {
@@ -83,7 +83,7 @@
 }
 
 .stuff {
-  background-color: #333;
+  background-color: #11213a;
 }
 
 .X {
@@ -110,4 +110,27 @@
   font-size: larger;
   font-weight: bolder;
   /*background-color: orange;*/
-} /*# sourceMappingURL=game.css.map */
+} 
+.ganhou_por_falta_de_tempo .X {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  color: #0ac0b1;
+  height: 710px;
+  width: 630px;
+  margin: 0 auto;
+  background-color: #11213a;
+}
+
+.ganhou_por_falta_de_tempo .O {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  color: #d7a727;
+  height: 710px;
+  width: 630px;
+  margin: 0 auto;
+  background-color: #11213a;
+}/*# sourceMappingURL=game.css.map */

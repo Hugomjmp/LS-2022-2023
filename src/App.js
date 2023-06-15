@@ -8,8 +8,7 @@ import MenuPlayers from "./components/MenuPlayers/menu-players.component"; //vai
 import MenuPlayerNames from "./components/MenuPlayerNames/MenuPlayerNames.component" //vai buscar o componente MenuPlayersNames
 import Game from "./components/game/game.component"; //vai buscar o componente Game
 
-import { useState } from "react";
-
+import {  useState } from "react";
 function App() {
 
   const [menuJogador, setMenuJogador] = useState(false); // para ativar o menu de jogador
@@ -18,7 +17,6 @@ function App() {
   const [gameType, setGameType] = useState(""); /* gameType para definir se é PvP ou PvE --> 0 para PvP e 1 para PvE*/
   const [player1nome, setPlayer1Nome] = useState("");
   const [player2nome, setPlayer2Nome] = useState("");
-
   const [firstPlayerToPlay,setFirstPlayerToPlay]= useState("");
 
   const [firstPlayerSymbol,setFirstPlayerSymbol]=useState("");
@@ -191,13 +189,15 @@ function handleResetGame(){
           <Game 
           resetgame={handleResetGame}
           gameStarted={gameStarted}
-          setGameStarted={setGameStarted}
+          handleGameStart={handleGameStart}
+          //setGameStarted={setGameStarted}
           playernames={() => [player1nome , player2nome]}
           gameType={gameType}
           firstPlayerToPlay={firstPlayerToPlay}
           firstPlayerSymbol={firstPlayerSymbol}
           secondPlayerSymbol={secondPlayerSymbol}
           setRandomPlayers={setRandomPlayers}
+          
           />
           )};
         </div>

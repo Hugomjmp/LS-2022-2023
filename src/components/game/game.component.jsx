@@ -44,7 +44,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
   const Game = (props) => {
     const {
       gameStarted, //usar no timer <---
-      setGameStarted,
+      handleGameStart,
       playernames,
       gameType,
       resetgame,
@@ -69,9 +69,9 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
     const [jogador1, jogador2] = playernames();
     console.log(jogador1 + jogador2);
     const [atribuisimbolo, setAtribuiSimbolo] = useState([jogador1, firstPlayerSymbol, jogador2, secondPlayerSymbol]);
-    for(let i = 0; i<=3; i++){
+/*    for(let i = 0; i<=3; i++){
     console.log("array de jogadores com simbolos = " + atribuisimbolo[i]);
-  }
+  }*/
     const [currentPlayer, setCurrentPlayer] = useState(firstPlayerSymbol); //simbolo que inicia aleatorio---> a funcionar
     console.log("simbolo que inicia= " + currentPlayer);
     const [currentSubTabuleiro, setCurrentSubTabuleiro] = useState(null);
@@ -89,10 +89,59 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
     ]);
     const [previousPlayer, setPreviousPlayer] = useState('');
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
+    const [timeoutJogador, setTimeoutJogador] = useState(false);
     //const [] = useState();
-    let timerId=undefined;
-    const [timer, setTimer] = useState(TIMEOUTGAME);
 
+
+
+/*------------------------------------*/
+/*|      timer de cada jogada        |*/
+/*------------------------------------*/
+console.log("currentplayer " + currentPlayer);
+console.log("previousPlayer " + previousPlayer);
+let timerId = undefined;
+const [timer, setTimer] = useState(TIMEOUTGAME);
+useEffect(() => {
+  if (currentPlayer == 'X') {
+    timerId = setInterval(() => {
+      let nextTimer;
+      setTimer((previousState) => {
+        nextTimer = previousState - 1;
+        console.log(nextTimer);
+        return nextTimer;
+      });
+    }, 1000);
+  } else if (timer !== TIMEOUTGAME) {
+    setTimer(TIMEOUTGAME);
+    
+  }
+  if (currentPlayer == 'O') {
+    timerId = setInterval(() => {
+      let nextTimer;
+      setTimer((previousState) => {
+        nextTimer = previousState - 1;
+        console.log(nextTimer);
+        return nextTimer;
+      });
+    }, 1000);
+  } else if (timer !== TIMEOUTGAME) {
+    setTimer(TIMEOUTGAME);
+    
+  }
+  return () => {
+    if (timerId) {
+      clearInterval(timerId);
+    }
+  };
+
+}, [currentPlayer]);
+
+useEffect(() =>{
+  if(timer === 0)
+  setTimeoutJogador(true);
+},[timer]);
+/*--------------------------------------------------------------*/
+/*
     useEffect(()=>{
       if (gameStarted) {
         timerId = setInterval(() => {
@@ -128,7 +177,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
         }
       };
     }, [gameStarted]);
-
+*/
 
 
     useEffect(()=> {
@@ -300,7 +349,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
         return indexes;
       },[]);
 
-      if (occupiedIndexes.find('X')===false|| occupiedIndexes.find('O')){}
+      //if (occupiedIndexes.find('X')===false|| occupiedIndexes.find('O')){} //isto está a matar o jogo
 
       for (let line of lines) {
         const [a, b, c] = line;
@@ -425,67 +474,86 @@ const activePlayer = currentPlayer;
 //-------------------------------------------------------------------
   return (
     <div className="Game">
-      <div className="GameInfo">
-        <div className="stuff row">
-          <label className="Time text-white" >Time: {timer} </label>
-          {atribuisimbolo.map((currentPlayer, index) => {
-        const isPlayerActive = currentPlayer === activePlayer;
-        console.log("isPlayerActive " + isPlayerActive);
-        if (isPlayerActive) {
-          if(currentPlayer === atribuisimbolo[1]){
-          return (
-            <label
-              className={`P1 col ${isPlayerActive ? "active" : ""} ${atribuisimbolo[1]}`}
-              key={index}
-            >
-              {"Jogador 1: " + atribuisimbolo[0] + ' ' + currentPlayer}
-            </label>
-          );
-        }
-        if(currentPlayer === atribuisimbolo[3]){
-          return (
-            <label
-              className={`P2 col ${isPlayerActive ? "active" : ""} ${atribuisimbolo[3]}`}
-              key={index}
-            >
-              {"Jogador 2: " + atribuisimbolo[2] + ' ' + currentPlayer}
-            </label>
-          );
-        }
-        }
+      <div className="esconde" hidden={timeoutJogador === true}>
+        <div className="GameInfo">
+          <div className="stuff row">
+            <label className="Time text-white">Time: {timer} </label>
+            {atribuisimbolo.map((currentPlayer, index) => {
+              const isPlayerActive = currentPlayer === activePlayer;
+              console.log("isPlayerActive " + isPlayerActive);
+              if (isPlayerActive) {
+                if (currentPlayer === atribuisimbolo[1]) {
+                  return (
+                    <label
+                      className={`P1 col ${isPlayerActive ? "active" : ""} ${
+                        atribuisimbolo[1]
+                      }`}
+                      key={index}
+                    >
+                      {"Jogador 1: " + atribuisimbolo[0] + " " + currentPlayer}
+                    </label>
+                  );
+                }
+                if (currentPlayer === atribuisimbolo[3]) {
+                  return (
+                    <label
+                      className={`P2 col ${isPlayerActive ? "active" : ""} ${
+                        atribuisimbolo[3]
+                      }`}
+                      key={index}
+                    >
+                      {"Jogador 2: " + atribuisimbolo[2] + " " + currentPlayer}
+                    </label>
+                  );
+                }
+              }
+            })}
+          </div>
+        </div>
+        {/*-----------------------------------------------------------------*/
+        /*|                      tabuleiro do jogo                         |*/
+        /*-----------------------------------------------------------------*/}
+        <div className="jogo">
+          {boardState.map((subTabuleiro, subTabuleiroIndex) => {
+            const isActive = subTabuleiroIndex === currentSubTabuleiro;
 
-       
-      })}
+            let row = Math.floor(subTabuleiroIndex / 3); // Calcular o número da linha do sub-tabuleiro
+            let col = subTabuleiroIndex % 3; // Calcular o número da coluna do sub-tabuleiro
 
+            return (
+              <SubTabuleiro
+                key={subTabuleiroIndex}
+                SubTabuleiroState={subTabuleiro}
+                onCelulaClick={(celulaRow, celulaCol) =>
+                  handleCelulaClick(row, col, celulaRow, celulaCol)
+                }
+                isActive={isActive}
+                completedBoard={completedBoard}
+              />
+            );
+          })}
+          {/*-------------------------------------------------------------------------- */}
         </div>
       </div>
-      {/*-----------------------------------------------------------------*/
-      /*|                      tabuleiro do jogo                         |*/
-      /*-----------------------------------------------------------------*/}
-      <div className="jogo">
-        {boardState.map((subTabuleiro, subTabuleiroIndex) => {
-          const isActive = subTabuleiroIndex === currentSubTabuleiro;
-         
+      <div className="ganhou_por_falta_de_tempo" hidden={timeoutJogador === false}>
+        {atribuisimbolo.map((currentPlayer, index) => {
+          if (currentPlayer === atribuisimbolo[1]) {
+            const playerwon = atribuisimbolo[2]
+            console.log("FDS " + playerwon);
+            return (
+              <label
 
-          let row = Math.floor(subTabuleiroIndex / 3); // Calcular o número da linha do sub-tabuleiro
-          let col = subTabuleiroIndex % 3; // Calcular o número da coluna do sub-tabuleiro
-
-          return (
-            <SubTabuleiro
-              key={subTabuleiroIndex}
-              SubTabuleiroState={subTabuleiro}
-              onCelulaClick={(celulaRow, celulaCol) =>
-                handleCelulaClick(row, col, celulaRow, celulaCol)
-              }
-              isActive={isActive}
-              completedBoard={completedBoard}
-            />
-            
-          );
+                className={`P2 col ${ playerwon} ${atribuisimbolo[3]}`}
+                key={index}
+                
+              >
+                Ganhou { playerwon } com o simbolo {atribuisimbolo[3]}
+              </label>
+            );
+          }
         })}
-        {/*-------------------------------------------------------------------------- */}
+        
       </div>
-
       {/*-------------------------------------------------------------------------- */}
 
       {/*-----------------------------------------------------------------*/

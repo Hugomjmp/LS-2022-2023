@@ -191,6 +191,7 @@ function handleResetGame(){
           <Game 
           resetgame={handleResetGame}
           gameStarted={gameStarted}
+          setGameStarted={setGameStarted}
           playernames={() => [player1nome , player2nome]}
           gameType={gameType}
           firstPlayerToPlay={firstPlayerToPlay}

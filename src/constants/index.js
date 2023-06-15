@@ -1,1 +1,1 @@
-export const TIMEOUTGAME = 3; // seconds
+export const TIMEOUTGAME = 30; // seconds

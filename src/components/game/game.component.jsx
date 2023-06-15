@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 //import { resetaqui } from "../../helpers/resetaqui";
-//import { TIMEOUTGAME } from "../../constants/index";
+import { TIMEOUTGAME } from "../../constants/index";
 
 //var FIRSTPLAYFLAG = true;
 var AUXTABULEIROCHEIO = true;
@@ -44,6 +44,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
   const Game = (props) => {
     const {
       gameStarted, //usar no timer <---
+      setGameStarted,
       playernames,
       gameType,
       resetgame,
@@ -89,6 +90,45 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
     const [previousPlayer, setPreviousPlayer] = useState('');
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
     //const [] = useState();
+    let timerId=undefined;
+    const [timer, setTimer] = useState(TIMEOUTGAME);
+
+    useEffect(()=>{
+      if (gameStarted) {
+        timerId = setInterval(() => {
+          let nextTimer;
+          if(currentPlayer === 'X'){ // pode haver aqui condições extra para verificação de empate/vitoria »??  o colega meteu estas condições extra por causa do codigo dele
+            // definir settimer para os dois jogadores
+            //  
+
+            // para evitar que o timer decremente, deve-e colocar next timer = previousState; 
+            // depois faz-se o return do next timer para o timer ficar sempre a zero, ou percorre-se o array dos quadros ganhos, faz-se o find/reduce ou outro e conta-se o numero de X e O 
+            // e calcula-se o vencedor assim (isto é o que se pretende)
+            setTimer((previousState) => {
+              nextTimer = previousState - 1;
+              return nextTimer;
+            });
+          }
+
+  
+          if (nextTimer === 0) {
+            setGameStarted(false);
+            console.log("timer explodiu");
+            return nextTimer; //<<<<<----- é isto que deve ficar para ficar com o timer sempre a zero quando chegar a zero
+
+          }
+        }, 1000);
+      } else if (timer !== TIMEOUTGAME) {
+        setTimer(TIMEOUTGAME);
+      }
+  
+      return () => {
+        if (timerId) {
+          clearInterval(timerId);
+        }
+      };
+    }, [gameStarted]);
+
 
 
     useEffect(()=> {
@@ -150,6 +190,9 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
     setCurrentSubTabuleiro(nextSubBoardIndex);
   },[currentPlayer, completedBoard]);
 
+
+  
+
     const handleCelulaClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
       if (winner) {/*console.log("entrou no winner -> handleCelulaClick")*/};
       if (currentSubTabuleiro !== null && currentSubTabuleiro !== subBoardRow * 3 + subBoardCell) return;
@@ -200,16 +243,32 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
           setWinner(boardState[subBoardIndex][rowA][ColA]);
           //auxTabuleiroCheio = false;
           return;
-        }
+        } 
+        /*******************************#######
+         * Lê ISTO HUGO!!!
+         * TENTA FAZER UMA COMPARAÇÃO DO TAMANHO DE LINE (LINE.LENGTH) E COM O ULTIMO INDICE DO LINE? (não sei se dará)
+         * PODE SER QUE ASSIM CONSIGAS DETETAR O FIM DE UM SUBBOARD PREENCHIDO E AÍ FAZ-SE O SETWINNER
+         * 
+         * OU ENTÃO,
+         * À MEDIDA QUE SE PERCORRE O LINES, COLOCA-SE PARA UM OUTRO ARRAY O CONTEUDO DO SUBBOARD DESSE INDEX E, QUANDO O ARRAY FICAR PREENCHIDO COM 8 SLOTS,
+         * QUER DIZER QUE TÁ TUDO PREENCHIDO E AÍ É TENTAR VER AQUELAS CONDIÇÕES QUE FALEI PELO WHATSAPP (TRêS ELEMENTOS SEGUIDOS IGUAIS, NUM CICLO FOR A CONTAR ATÉ TRES, REPRESENTA UMA LINHA E POR AI ADIANTE)
+         * 
+         * TAMBÉM SE PODE TENTAR MUDAR O QUE É RECEBIDO NESTA FUNÇÃO E NAS QUE VêM PARA RECEBER APENAS O INDICE DO SUBBOARD E DA CELULA NUM ARRAY NORMAL (DE 0 8)
+         * E AÍ TORNA-SE MAIS LEGÍVEL E TEM-SE UMA FORMA MAIS AMISTOSA DE SE COMPARAR --> VER LINHAS 473; 474; CONST SUBTABULEIRO, CELULA e boarstate (altera-lo para um bidemnsional)
+         * 
+         * 
+         * 
+         * 
+         */
             // Verifica se o subtabuleiro está preenchido
         if (boardState[subBoardIndex][rowA][ColA] === '') {
             AUXTABULEIROCHEIO = false;
-            console.log(boardState[subBoardIndex][rowA][ColA]);
+            console.log("entrou no "+ boardState[subBoardIndex][rowA][ColA]);
         }
       }
   
   // Se o subtabuleiro estiver preenchido e não houver um vencedor, é um empate
-  if (AUXTABULEIROCHEIO) {
+  if (AUXTABULEIROCHEIO===false) {
     setWinner('T');
     //boardState[subBoardIndex]
     console.log("empate");
@@ -232,7 +291,17 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
         [[0, 0], [1, 1], [2, 2]],
         [[0, 2], [1, 1], [2, 0]],
       ];
-  
+      
+      const occupiedIndexes = completedBoard.reduce((indexes, value, index) => {
+        if (value === 'X' || value === 'O' || value === 'T' ) {
+          console.log("value" + value);
+          indexes.push(index);
+        }
+        return indexes;
+      },[]);
+
+      if (occupiedIndexes.find('X')===false|| occupiedIndexes.find('O')){}
+
       for (let line of lines) {
         const [a, b, c] = line;
         const [rowA, colA] = a;
@@ -358,7 +427,7 @@ const activePlayer = currentPlayer;
     <div className="Game">
       <div className="GameInfo">
         <div className="stuff row">
-          <label className="Time text-white">Time: </label>
+          <label className="Time text-white" >Time: {timer} </label>
           {atribuisimbolo.map((currentPlayer, index) => {
         const isPlayerActive = currentPlayer === activePlayer;
         console.log("isPlayerActive " + isPlayerActive);

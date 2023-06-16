@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 //import { resetaqui } from "../../helpers/resetaqui";
 import { TIMEOUTGAME } from "../../constants/index";
 
-//var FIRSTPLAYFLAG = true;
-var AUXTABULEIROCHEIO = true;
 
 const Celula = ({ value, onClick }) => {
   return (
@@ -19,10 +17,29 @@ const Celula = ({ value, onClick }) => {
   }
 }*/
 
-const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
- 
-  return (
-    <div className={`sub-tabuleiro ${isActive ? 'active-sub-tabuleiro' : ''}`}>
+
+const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive, completedBoard}) => {
+/*  //let iii = 0;
+  if(iii == 9){
+    iii = 0;
+  }
+
+
+const aux = completedBoard.flat();
+aux.unshift('');
+//console.log(aux);
+/*
+[X],[X],[O],[O],[''],[X],[X],[''],['']
+ 0   1   2   3    4   5   6   7    8
+//console.log(aux);
+iii++;
+console.log(iii + ' ' + aux[iii]);
+*/
+
+
+return (
+    <div className={`sub-tabuleiro ${isActive ? 'active-sub-tabuleiro' : ''}`} > 
+    
       {SubTabuleiroState.map((row, rowIndex) => (
         <div key={rowIndex} className="sub-tabuleiro-row">
           {row.map((celula, celulaIndex) => (
@@ -36,6 +53,7 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
       ))}
     </div>
   );
+
 };
 
 
@@ -52,8 +70,8 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
       firstPlayerSymbol,
       secondPlayerSymbol,
     } = props;
-    console.log("firstplayer = " + firstPlayerToPlay);
-    console.log("firstPlayerSymbol " + firstPlayerSymbol);
+    //console.log("firstplayer = " + firstPlayerToPlay);
+    //console.log("firstPlayerSymbol " + firstPlayerSymbol);
 
     const [boardState, setBoardState] = useState([
       [['', '', ''], ['', '', ''], ['', '', '']],
@@ -66,48 +84,54 @@ const SubTabuleiro = ({ SubTabuleiroState, onCelulaClick, isActive}) => {
       [['', '', ''], ['', '', ''], ['', '', '']],
       [['', '', ''], ['', '', ''], ['', '', '']],
     ]);
+    
     const [jogador1, jogador2] = playernames();
-    console.log(jogador1 + jogador2);
+    //console.log(jogador1 + jogador2);
     const [atribuisimbolo, setAtribuiSimbolo] = useState([jogador1, firstPlayerSymbol, jogador2, secondPlayerSymbol]);
 /*    for(let i = 0; i<=3; i++){
     console.log("array de jogadores com simbolos = " + atribuisimbolo[i]);
   }*/
     const [currentPlayer, setCurrentPlayer] = useState(firstPlayerSymbol); //simbolo que inicia aleatorio---> a funcionar
-    console.log("simbolo que inicia= " + currentPlayer);
+    //console.log("simbolo que inicia= " + currentPlayer);
     const [currentSubTabuleiro, setCurrentSubTabuleiro] = useState(null);
     const [winner, setWinner] = useState(null);
+    const [ empateFinal ,setEmpateFinal] = useState(false);
     const [completedBoard,setCompletedBoard] = useState([
-      [''],
-      [''],
-      [''],
-      [''],
-      [''],
-      [''],
-      [''],
-      [''],
+      ['X'],
+      ['X'],
+      ['O'],
+      ['O'],
+      ['O'],
+      ['X'],
+      ['X'],
+      ['X'],
       [''],
     ]);
-    const [previousPlayer, setPreviousPlayer] = useState('');
+    const [previousPlayer, setPreviousPlayer] = useState(secondPlayerSymbol);
     const [previousSubBoard, setPreviousSubBoard] = useState(null);
     const [timeoutJogador, setTimeoutJogador] = useState(false);
     //const [] = useState();
-
+    var EMPATOU = false;
+    const [tie,setTie]= useState(false);
 
 
 /*------------------------------------*/
 /*|      timer de cada jogada        |*/
 /*------------------------------------*/
-console.log("currentplayer " + currentPlayer);
-console.log("previousPlayer " + previousPlayer);
+//-------------não mexer aqui sff que isto funciona------------------
+//console.log("currentplayer " + currentPlayer);
+//console.log("previousPlayer " + previousPlayer);
 let timerId = undefined;
 const [timer, setTimer] = useState(TIMEOUTGAME);
+
+
 useEffect(() => {
   if (currentPlayer == 'X') {
     timerId = setInterval(() => {
       let nextTimer;
       setTimer((previousState) => {
         nextTimer = previousState - 1;
-        console.log(nextTimer);
+        //console.log(nextTimer);
         return nextTimer;
       });
     }, 1000);
@@ -120,7 +144,7 @@ useEffect(() => {
       let nextTimer;
       setTimer((previousState) => {
         nextTimer = previousState - 1;
-        console.log(nextTimer);
+        //console.log(nextTimer);
         return nextTimer;
       });
     }, 1000);
@@ -139,6 +163,7 @@ useEffect(() => {
 useEffect(() =>{
   if(timer === 0)
   setTimeoutJogador(true);
+  
 },[timer]);
 /*--------------------------------------------------------------*/
 /*
@@ -179,21 +204,37 @@ useEffect(() =>{
     }, [gameStarted]);
 */
 
-
+/*--------------------------------------------------------------*//*--------------------------------------------------------------*//*--------------------------------------------------------------*/
     useEffect(()=> {
-      
       ///console.log("inicio completed board" +completedBoard );
       //console.log("current player useeffect" + previousPlayer);
+      console.log("COMPLETED BOARD PRÉ ...completedBoard" + completedBoard);
       const auxCompletedBoard = [...completedBoard];
-      auxCompletedBoard[previousSubBoard] = previousPlayer;
-      setCompletedBoard(auxCompletedBoard);
-      //console.log("completedboard"+ completedBoard);
-      disableboards();
-  }, [winner]);
+      console.log("CÓPIA BOARD PRÉ ...completedBoard"+ auxCompletedBoard);
+      console.log("TIE/WINNER");
+      if (tie === true){
+        auxCompletedBoard[previousSubBoard] = 'E';
+        setCompletedBoard(auxCompletedBoard);
+        console.log("EMPATE!!!!" + completedBoard);
+        //console.log("empatou aqui"+auxCompletedBoard[previousSubBoard]);
+        
+      }else{
+        
+        auxCompletedBoard[previousSubBoard] = previousPlayer;   //<--------------------------------------------------------------------------------
+        //console.log(auxCompletedBoard);
+        setCompletedBoard(auxCompletedBoard);
+        console.log("VITORIA!!!! ##########COMPLETED BOARD#######" + completedBoard);
+        setTie(false);
+        setWinner(null);
+      }
 
-  function disableboards(){
-    console.log("entrou");
-  }
+      //console.log("completedboard"+ completedBoard);
+
+      //setWinner(null);
+      
+  }, [ tie, winner]);
+/*--------------------------------------------------------------*//*--------------------------------------------------------------*//*--------------------------------------------------------------*/
+
   useEffect(()=>{
     //const aux_CompletedBoard = [...completedBoard];
     let min = 0;
@@ -202,34 +243,23 @@ useEffect(() =>{
     
     //console.log(" useeffect --- indice ANTES do while" + nextSubBoardIndex);
     
-
-
-    const occupiedIndexes = completedBoard.reduce((indexes, value, index) => {
-      if (value === 'X' || value === 'O' || value === 'T' ) {
-        console.log("value" + value);
+    const teste = completedBoard.flat();
+    
+    const occupiedIndexes = teste.reduce((indexes, value, index) => {
+      //console.log("value " + value, "index: " + index );
+      if (value === 'X' || value === 'O' || value === "E" ) {
+        //console.log("dentro do if value" + value);
         indexes.push(index);
       }
+
+
       return indexes;
     },[]);
 
+    //console.log("indexes", occupiedIndexes);
+    //console.log("AQUIIIIIIIIIIIIIIIIII");
 
-/*useEffect(()=>{
-  
-
-  return (
-    
-    <div className={'sub-tabuleiro' ${occupiedIndexes ? "finished" : ""}}></div>
-  );
-
-
-
-},[occupiedIndexes]);*/
-    console.log("indexes", occupiedIndexes);
-
-
-
-
-    while(occupiedIndexes.includes(nextSubBoardIndex) === true) {
+    while(occupiedIndexes.includes(nextSubBoardIndex) == true) {
       //console.log("ENTROU NO INCLUDES" + occupiedIndexes.includes(nextSubBoardIndex));
       nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
       //console.log("ENTROU NO INCLUDES --- SUBBOARD INDEX" + nextSubBoardIndex);
@@ -237,142 +267,228 @@ useEffect(() =>{
 
     //console.log("useeffect --- nextSubBoardIndex depois do occupied indexes" +nextSubBoardIndex );   
     setCurrentSubTabuleiro(nextSubBoardIndex);
-  },[currentPlayer, completedBoard]);
+  },[completedBoard]);
+
+  useEffect(()=>{
+    //const aux_CompletedBoard = [...completedBoard];
+    let min = 0;
+    let max = 8;
+    let nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+    
+    //console.log(" useeffect --- indice ANTES do while" + nextSubBoardIndex);
+    
+    const teste = completedBoard.flat();
+    
+    const occupiedIndexes = teste.reduce((indexes, value, index) => {
+      
+      if (value === 'X' || value === 'O' || value === "E" ) {
+        console.log("value" + value);
+        indexes.push(index);
+      }
+
+
+      return indexes;
+    },[]);
+
+    //console.log("indexes", occupiedIndexes);
+    //console.log("AQUIIIIIIIIIIIIIIIIII");
+
+    while(occupiedIndexes.includes(nextSubBoardIndex) == true) {
+      //console.log("ENTROU NO INCLUDES" + occupiedIndexes.includes(nextSubBoardIndex));
+      nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+      //console.log("ENTROU NO INCLUDES --- SUBBOARD INDEX" + nextSubBoardIndex);
+    }
+
+    //console.log("useeffect --- nextSubBoardIndex depois do occupied indexes" +nextSubBoardIndex );   
+    setCurrentSubTabuleiro(nextSubBoardIndex);
+  },[currentPlayer]);
 
 
   
 
-    const handleCelulaClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
-      if (winner) {/*console.log("entrou no winner -> handleCelulaClick")*/};
-      if (currentSubTabuleiro !== null && currentSubTabuleiro !== subBoardRow * 3 + subBoardCell) return;
+  const handleCelulaClick = (subBoardRow, subBoardCell, cellRow, cellCol) => {
+    //if (winner) {/*console.log("entrou no winner -> handleCelulaClick")*/};<<<<<----
+    if (currentSubTabuleiro !== null && currentSubTabuleiro !== subBoardRow * 3 + subBoardCell) return;
 
-      const subBoardIndex = subBoardRow * 3 + subBoardCell;
-      let min = 0;
-      let max = 8;
-      let nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
+    const subBoardIndex = subBoardRow * 3 + subBoardCell;
+    let min = 0;
+    let max = 8;
+    let nextSubBoardIndex = Math.floor(Math.random() * (max - min + 1) + min);
 
-      const newBoardState = [...boardState];
-      const subBoard = newBoardState[subBoardIndex];
+    const newBoardState = [...boardState];
+    const subBoard = newBoardState[subBoardIndex];
+    //checkWinner(completedBoard);
+    if (subBoard[cellRow][cellCol] === '') {
+      setPreviousPlayer(currentPlayer);
+      setPreviousSubBoard(currentSubTabuleiro);
+      subBoard[cellRow][cellCol] = currentPlayer;
+      setBoardState(newBoardState);
+      checkSubBoardWinner(newBoardState, subBoardIndex); // Verificar vencedor do sub-tabuleiro
+      setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
 
-      if (subBoard[cellRow][cellCol] === '') {
-        setPreviousPlayer(currentPlayer);
-        setPreviousSubBoard(currentSubTabuleiro);
-        subBoard[cellRow][cellCol] = currentPlayer;
-        setBoardState(newBoardState);
-        checkWinner(newBoardState, subBoardRow, subBoardCell);
-        checkSubBoardWinner(newBoardState, subBoardIndex); // Verificar vencedor do sub-tabuleiro
-        setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
-
-      }
-    };
+    }
+    checkWinner(completedBoard);
     
+  };
+
+
+
     const checkSubBoardWinner = (boardState, subBoardIndex) => {
-      const lines = [
-        [[0, 0], [0, 1], [0, 2]],
-        [[1, 0], [1, 1], [1, 2]],
-        [[2, 0], [2, 1], [2, 2]],
-        [[0, 0], [1, 0], [2, 0]],
-        [[0, 1], [1, 1], [2, 1]],
-        [[0, 2], [1, 2], [2, 2]],
-        [[0, 0], [1, 1], [2, 2]],
-        [[0, 2], [1, 1], [2, 0]],
-      ];
+/**
+ *  Sistema de coordenadas para a matriz  
+ * 
+ * 
+ *          [0, 0] | [0, 1] | [0, 2]
+ *          -------|--------|-------
+ *          [1, 0] | [1, 1] | [1, 2]
+ *          -------|--------|-------
+ *          [2, 0] | [2, 1] | [2, 2]
+ * 
+ *  
+ */
+//combinações possiveis
+/*console.log(boardState[0]);
+console.log(boardState[1]);
+console.log(boardState[2]);
+console.log(boardState[3]);
+console.log(boardState[4]);
+console.log(boardState[5]);
+console.log(boardState[6]);
+console.log(boardState[7]);
+console.log(boardState[8]);*/
+
+  const lines = [
+    [[0, 0], [0, 1], [0, 2]],
+    [[1, 0], [1, 1], [1, 2]],
+    [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]],
+    [[0, 1], [1, 1], [2, 1]],
+    [[0, 2], [1, 2], [2, 2]],
+    [[0, 0], [1, 1], [2, 2]],
+    [[0, 2], [1, 1], [2, 0]],
+  ];
+  let isBoardFull = true; // Variável para verificar se o subtabuleiro está cheio
+
+
+  for (let line of lines) {
+    const [a, b, c] = line;
+    const [rowA, colA] = a;
+    const [rowB, colB] = b;
+    const [rowC, colC] = c;
+    //console.log("-------");
+    //console.log(boardState[subBoardIndex][rowA][colA]);
+    //console.log(boardState[subBoardIndex][rowB][colB]);
+    //console.log(boardState[subBoardIndex][rowC][colC]);
+    //console.log("-------");
+    if (
+      boardState[subBoardIndex][rowA][colA] !== '' &&
+      boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowB][colB] &&
+      boardState[subBoardIndex][rowA][colA] === boardState[subBoardIndex][rowC][colC]
+    ) {
+      //console.log(subBoardIndex);
+      //console.log("entrou no sub board winner");
+      //console.log("tralha ---- " + boardState[subBoardIndex][rowA][colA]);
+      setWinner(boardState[subBoardIndex][rowA][colA]);
+      //console.log("winner dentro do subboard winner!!!! ##### " + winner);
       
-      for (let line of lines) {
-        const [a, b, c] = line;
-        const [rowA, ColA] = a;
-        const [rowb, ColB] = b;
-        const [rowC, ColC] = c;
-        if (
-          boardState[subBoardIndex][rowA][ColA] !== '' &&
-          boardState[subBoardIndex][rowA][ColA] === boardState[subBoardIndex][rowb][ColB] &&
-          boardState[subBoardIndex][rowA][ColA] === boardState[subBoardIndex][rowC][ColC]
-        ) {
-          console.log("entrou no subwinner");
-          setWinner(boardState[subBoardIndex][rowA][ColA]);
-          //auxTabuleiroCheio = false;
-          return;
-        } 
-        /*******************************#######
-         * Lê ISTO HUGO!!!
-         * TENTA FAZER UMA COMPARAÇÃO DO TAMANHO DE LINE (LINE.LENGTH) E COM O ULTIMO INDICE DO LINE? (não sei se dará)
-         * PODE SER QUE ASSIM CONSIGAS DETETAR O FIM DE UM SUBBOARD PREENCHIDO E AÍ FAZ-SE O SETWINNER
-         * 
-         * OU ENTÃO,
-         * À MEDIDA QUE SE PERCORRE O LINES, COLOCA-SE PARA UM OUTRO ARRAY O CONTEUDO DO SUBBOARD DESSE INDEX E, QUANDO O ARRAY FICAR PREENCHIDO COM 8 SLOTS,
-         * QUER DIZER QUE TÁ TUDO PREENCHIDO E AÍ É TENTAR VER AQUELAS CONDIÇÕES QUE FALEI PELO WHATSAPP (TRêS ELEMENTOS SEGUIDOS IGUAIS, NUM CICLO FOR A CONTAR ATÉ TRES, REPRESENTA UMA LINHA E POR AI ADIANTE)
-         * 
-         * TAMBÉM SE PODE TENTAR MUDAR O QUE É RECEBIDO NESTA FUNÇÃO E NAS QUE VêM PARA RECEBER APENAS O INDICE DO SUBBOARD E DA CELULA NUM ARRAY NORMAL (DE 0 8)
-         * E AÍ TORNA-SE MAIS LEGÍVEL E TEM-SE UMA FORMA MAIS AMISTOSA DE SE COMPARAR --> VER LINHAS 473; 474; CONST SUBTABULEIRO, CELULA e boarstate (altera-lo para um bidemnsional)
-         * 
-         * 
-         * 
-         * 
-         */
-            // Verifica se o subtabuleiro está preenchido
-        if (boardState[subBoardIndex][rowA][ColA] === '') {
-            AUXTABULEIROCHEIO = false;
-            console.log("entrou no "+ boardState[subBoardIndex][rowA][ColA]);
-        }
-      }
-  
-  // Se o subtabuleiro estiver preenchido e não houver um vencedor, é um empate
-  if (AUXTABULEIROCHEIO===false) {
-    setWinner('T');
-    //boardState[subBoardIndex]
-    console.log("empate");
+      return;
+    }
   }
-    };
-    
-   
-  
-    const checkWinner = (boardState, subBoardRow, subBoardCell) => {
-      const lines = [
-        // Horizontal lines
-        [[0, 0], [0, 1], [0, 2]],
-        [[1, 0], [1, 1], [1, 2]],
-        [[2, 0], [2, 1], [2, 2]],
-        // Vertical lines
-        [[0, 0], [1, 0], [2, 0]],
-        [[0, 1], [1, 1], [2, 1]],
-        [[0, 2], [1, 2], [2, 2]],
-        // Diagonal lines
-        [[0, 0], [1, 1], [2, 2]],
-        [[0, 2], [1, 1], [2, 0]],
-      ];
-      
-      const occupiedIndexes = completedBoard.reduce((indexes, value, index) => {
-        if (value === 'X' || value === 'O' || value === 'T' ) {
-          console.log("value" + value);
-          indexes.push(index);
-        }
-        return indexes;
-      },[]);
 
-      //if (occupiedIndexes.find('X')===false|| occupiedIndexes.find('O')){} //isto está a matar o jogo
-
-      for (let line of lines) {
-        const [a, b, c] = line;
-        const [rowA, colA] = a;
-        const [rowB, colB] = b;
-        const [rowC, colC] = c;
-  
-        if (
-          boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] !== '' &&
-          boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] ===
-            boardState[subBoardRow * 3 + rowB][subBoardCell * 3 + colB] &&
-          boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA] ===
-            boardState[subBoardRow * 3 + rowC][subBoardCell * 3 + colC]
-        ) {
-          console.log("entrou no winner funoca");
-          /*setWinner(boardState[subBoardRow * 3 + rowA][subBoardCell * 3 + colA]);*/
-          return;
-        }
+  // Verificar se o subtabuleiro está cheio
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      if (boardState[subBoardIndex][row][col] === '') {
+        isBoardFull = false;
+        break;
       }
-    };
+    }
+    if (!isBoardFull) {
 
-
+      break;
+    }
+  }
+  
+  console.log("isBoardFull" + isBoardFull);
+  if (isBoardFull) {
+    setTie(true);
+    setWinner('E'); // Define o estado 'winner' como 'E' (empate)
+    console.log(winner);
     
+  }
+};
+
+
+
+const checkWinner = (completedBoard) => {
+
+// Para o simbolo X
+/**
+ * [X],[X],[X],[''],[''],[''],[''],[''],[''] 1ªhipotese
+ * [''],[''],[''],[X],[X],[X],[''],[''],[''] 2ªhipotese
+ * [''],[''],[''],[''],[''],[''],[X],[X],[X] 3ªhipotese
+ * [X],[''],[''],[''],[X],[''],[''],[''],[X] 4ªhipotese
+ * [''],[''],[X],[''],[X],[''],[X],[''],[''] 5ªhipotese
+ * 
+ */
+
+//const arrayresultados = completedBoard;
+
+const arrayresultados = completedBoard.flat();
+
+console.log(arrayresultados);
+//console.log(completedBoard);
+
+//Para o X
+const simboloX = 'X';
+if(arrayresultados[0] === simboloX && arrayresultados[1] === simboloX && arrayresultados[2] === simboloX ){
+  setTimeoutJogador(true);
+  //console.log('1ª linha 1 X');
+}
+if(arrayresultados[3] === simboloX && arrayresultados[4] === simboloX && arrayresultados[5] === simboloX ){
+  setTimeoutJogador(true);
+  //console.log('2ª linha 1 X');
+}
+if(arrayresultados[6] === simboloX && arrayresultados[7] === simboloX && arrayresultados[8] === simboloX ){
+  setTimeoutJogador(true);
+  //console.log('3ª linha 1 X');
+}
+if(arrayresultados[0] === simboloX && arrayresultados[4] === simboloX && arrayresultados[8] === simboloX ){
+  setTimeoutJogador(true);
+  //console.log('1ª diagonal 1 X');
+}
+if(arrayresultados[2] === simboloX && arrayresultados[4] === simboloX && arrayresultados[6] === simboloX ){
+  setTimeoutJogador(true);
+  //console.log('2ª diagonal 1 X');
+}
+//Para a O
+
+const simboloO = 'O';
+if(arrayresultados[0] === simboloO && arrayresultados[1] === simboloO && arrayresultados[2] === simboloO ){
+  setTimeoutJogador(true);
+  //console.log('1ª linha 1 O');
+}
+if(arrayresultados[3] === simboloO && arrayresultados[4] === simboloO && arrayresultados[5] === simboloO ){
+  setTimeoutJogador(true);
+  //console.log('2ª linha 1 O');
+}
+if(arrayresultados[6] === simboloO && arrayresultados[7] === simboloO && arrayresultados[8] === simboloO ){
+  setTimeoutJogador(true);
+  //console.log('3ª linha 1 O');
+}
+if(arrayresultados[0] === simboloO && arrayresultados[4] === simboloO && arrayresultados[8] === simboloO ){
+  setTimeoutJogador(true);
+  //console.log('1ª diagonal 1 O');
+}
+if(arrayresultados[2] === simboloO && arrayresultados[4] === simboloX && arrayresultados[6] === simboloO ){
+  setTimeoutJogador(true);
+  //console.log('2ª diagonal 1 O');
+}
+  // Verificar empate
+
+
+};
+   
 
 /*-----------------------------------------------------------------*/
 /*|                      Reset ao jogo                            |*/
@@ -469,18 +585,25 @@ const jogaCPU = () => {
     col
   );
 };
-console.log(currentPlayer);
+//console.log(currentPlayer);
 const activePlayer = currentPlayer;
 //-------------------------------------------------------------------
+//-------------------------------------------------------------------
+
+
+
+
+
+//--------------------------------------------------------------------
   return (
     <div className="Game">
-      <div className="esconde" hidden={timeoutJogador === true}>
+      <div className="esconde" hidden = {timeoutJogador === true || empateFinal === true}>
         <div className="GameInfo">
           <div className="stuff row">
             <label className="Time text-white">Time: {timer} </label>
             {atribuisimbolo.map((currentPlayer, index) => {
               const isPlayerActive = currentPlayer === activePlayer;
-              console.log("isPlayerActive " + isPlayerActive);
+              //console.log("isPlayerActive " + isPlayerActive);
               if (isPlayerActive) {
                 if (currentPlayer === atribuisimbolo[1]) {
                   return (
@@ -515,11 +638,13 @@ const activePlayer = currentPlayer;
         /*-----------------------------------------------------------------*/}
         <div className="jogo">
           {boardState.map((subTabuleiro, subTabuleiroIndex) => {
+            
             const isActive = subTabuleiroIndex === currentSubTabuleiro;
 
+              //console.log("board em questão FORA DO ATIVE false" + subTabuleiroIndex);
             let row = Math.floor(subTabuleiroIndex / 3); // Calcular o número da linha do sub-tabuleiro
             let col = subTabuleiroIndex % 3; // Calcular o número da coluna do sub-tabuleiro
-
+            
             return (
               <SubTabuleiro
                 key={subTabuleiroIndex}
@@ -529,17 +654,19 @@ const activePlayer = currentPlayer;
                 }
                 isActive={isActive}
                 completedBoard={completedBoard}
+                
               />
             );
-          })}
+            }
+          )};
           {/*-------------------------------------------------------------------------- */}
         </div>
       </div>
       <div className="ganhou_por_falta_de_tempo" hidden={timeoutJogador === false}>
-        {atribuisimbolo.map((currentPlayer, index) => {
-          if (currentPlayer === atribuisimbolo[1]) {
+        {atribuisimbolo.map((previousPlayer, index) => {
+          if (previousPlayer === atribuisimbolo[1]) {
             const playerwon = atribuisimbolo[2]
-            console.log("FDS " + playerwon);
+
             return (
               <label
 
@@ -552,6 +679,12 @@ const activePlayer = currentPlayer;
             );
           }
         })}
+        
+      </div>
+      <div className="empate" hidden = {empateFinal=== false}>
+        
+              <label>  EMPATE </label>
+    
         
       </div>
       {/*-------------------------------------------------------------------------- */}

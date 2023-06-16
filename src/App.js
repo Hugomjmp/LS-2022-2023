@@ -32,30 +32,30 @@ function App() {
 /*|   Definição aleatória de primeiro jogador a jogar e símbolo  |*/
 /*-----------------------------------------------------------------*/
 function setRandomPlayers(){
-  console.log("entrou setrandom players -- aux_symbol" + aux_symbol );
+  
   if (aux_firstplayer === 1){
 
     setFirstPlayerToPlay("player1");
-    console.log("entrou setrandom players -- first player" + firstPlayerToPlay );
+    
     if (aux_symbol === 1){
       setFirstPlayerSymbol("X");
-      console.log("simbolo primeiro jogador" + firstPlayerSymbol);
+      
       setSecondPlayerSymbol("O");
     }else{
       setFirstPlayerSymbol("O");
-      console.log(firstPlayerSymbol);
+      
       setSecondPlayerSymbol("X");
-      console.log("simbolo primeiro jogador" + firstPlayerSymbol);
+      
     }
     }else{
       setFirstPlayerToPlay("player2");
       if (aux_symbol === 1){
         setFirstPlayerSymbol("O");
-        console.log(firstPlayerSymbol);
+        
         setSecondPlayerSymbol("X");
       }else{
         setFirstPlayerSymbol("X");
-        console.log(firstPlayerSymbol);
+        
         setSecondPlayerSymbol("O");
       }
     }
@@ -72,22 +72,15 @@ function setRandomPlayers(){
     }else{
       setPlayer1Nome(player1nome);
       setPlayer2Nome(player2nome);
-      
     }
-    
-    //console.log("aqui" + player1nome);
   }
 
 /*-----------------------------------------*/
   function handleMenuJogador() {
     if (menuJogador === false) {
       setMenuJogador(true);
-      
-      //console.log("Saiu do menu Principal = " + !menuJogador);
     } else {
-      
       setMenuJogador(false);
-      //console.log("aqui 2 " + menuJogador);
     }
   }
 
@@ -115,14 +108,12 @@ function handleResetGame(){
   /*------------------------------------*/
   /*|   Determina se o jogo começou    |*/
   /*------------------------------------*/
-   function handleGameStart() {
+  function handleGameStart() {
     if (gameStarted === false) {
       setRandomPlayers();
       setGameStarted(true);
-      //console.log("Inicia Jogo " + gameStarted);
     } else {
       setGameStarted(false);
-      //console.log("Termina Jogo " + gameStarted);
     }
   }
 
@@ -139,16 +130,11 @@ function handleResetGame(){
       case "PVE":
         setGameType(value);
         setMenuNomeJogador(true);
-        //setMenuJogador(false);
-        //console.log("-> Menu de Jogadores " + menuNomeJogador);
-       // console.log("Selecionou PVE " + gameType);
         break;
       // Level: jogador vs jogador
       case "PVP":
         setGameType(value);
         setMenuNomeJogador(true);
-        //console.log("-> Menu de Jogadores " + menuNomeJogador);
-        //console.log("Selecionou PVP " + gameType);
         break;
     }
 
@@ -174,7 +160,7 @@ function handleResetGame(){
           menuJogador={menuJogador}
           gameType={handleGameType}
           resetgame={handleResetGame}
-         />
+        />
           )}
         {gameStarted + !menuNomeJogador ? null : (
           <MenuPlayerNames 
@@ -190,7 +176,6 @@ function handleResetGame(){
           resetgame={handleResetGame}
           gameStarted={gameStarted}
           handleGameStart={handleGameStart}
-          //setGameStarted={setGameStarted}
           playernames={() => [player1nome , player2nome]}
           gameType={gameType}
           firstPlayerToPlay={firstPlayerToPlay}
@@ -199,7 +184,7 @@ function handleResetGame(){
           setRandomPlayers={setRandomPlayers}
           
           />
-          )};
+          )}
         </div>
         <div className="col-1"></div>
       </div>

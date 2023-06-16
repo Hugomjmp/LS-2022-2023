@@ -129,3 +129,23 @@
   margin: 0 auto;
   background-color: #11213a;
 }
+
+.sub-tabuleiro.X{
+  background-color: #0ac0b18c;
+}
+
+.sub-tabuleiro.O{
+  background-color: #d7a82769;
+}
+
+.empate{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  color:#0ac0b1;
+  height: 710px;
+  width: 630px;
+  margin: 0 auto;
+  background-color: #11213a;
+}

@@ -133,4 +133,24 @@
   width: 630px;
   margin: 0 auto;
   background-color: #11213a;
+}
+
+.sub-tabuleiro.X {
+  background-color: rgba(10, 192, 177, 0.5490196078);
+}
+
+.sub-tabuleiro.O {
+  background-color: rgba(215, 168, 39, 0.4117647059);
+}
+
+.empate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  color: #0ac0b1;
+  height: 710px;
+  width: 630px;
+  margin: 0 auto;
+  background-color: #11213a;
 }/*# sourceMappingURL=game.css.map */

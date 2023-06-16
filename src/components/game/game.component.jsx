@@ -485,7 +485,11 @@ if(arrayresultados[2] === simboloO && arrayresultados[4] === simboloX && arrayre
   //console.log('2ª diagonal 1 O');
 }
   // Verificar empate
-
+  const tabuleiroCompleto = arrayresultados.every((posicao) => posicao !== '');
+  if (tabuleiroCompleto && !setTimeoutJogador) {
+    console.log("Empate!");
+    setEmpateFinal(true);
+  }
 
 };
    
@@ -683,7 +687,13 @@ const activePlayer = currentPlayer;
       </div>
       <div className="empate" hidden = {empateFinal=== false}>
         
-              <label>  EMPATE </label>
+              <label
+
+
+                
+              >
+                EMPATE
+              </label>
     
         
       </div>
